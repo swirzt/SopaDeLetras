@@ -10,7 +10,7 @@ Representamos un tablero de Sopa de letras con Listas de Listas (matriz)
 Un string representa un caracter en la sopa y los espacios vacios son 0 (Int)
 Las listas dentro representan columnas, los indices de sus elementos representan las posicion Y, con Y invertido (Positivos hacia abajo)
 Contando desde 0
-Por ej, la posicion (4,3) = tablero[2][1] = 8
+Por ej, la posicion (2,1) = tablero[2][1] = 8
 tablero = [[1,2,3],[4,5,6],[7,8,9]] -> 1 4 7
                                        2 5 8
                                        3 6 9
@@ -23,7 +23,7 @@ En las tuplas se especifica la coordenada X,Y donde se coloco y el valor que ten
 La lista puede ser una mezcla de las 2
 Por ej:
 P1 = ["TATETI","SUDOKU","SOPA","DE","LETRAS"]
-P2 = [["TATETI",(0,0,0),(0,1,0),(0,2,"D"),(0,3,0),(0,4,"K"),(0,5,0)],"SUDOKU","SOPA","DE","LETRAS"]
+P2 = [["TATETI",(0,0,0),(0,1,0),(0,2,"T"),(0,3,0),(0,4,"T"),(0,5,0)],"SUDOKU","SOPA","DE","LETRAS"]
 """
 
 def totalCaracteres(lista):
@@ -437,6 +437,4 @@ def main():
         resuelveSopa()
 
 def resuelveSopa():
-    print("Yo mama so fat")
-
-generaSopa()
+    
