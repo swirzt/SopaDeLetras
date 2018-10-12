@@ -1,5 +1,6 @@
 from random import randrange, shuffle
 from math import sqrt, ceil
+from os import getcwd
 #Constantes
 ABECEDARIO = ("a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z")
 LARGOABC = len(ABECEDARIO)
@@ -10,7 +11,7 @@ Representamos un tablero de Sopa de letras con Listas de Listas (matriz)
 Un string representa un caracter en la sopa y los espacios vacios son 0 (Int)
 Las listas dentro representan columnas, los indices de sus elementos representan las posicion Y, con Y invertido (Positivos hacia abajo)
 Contando desde 0
-Por ej, la posicion (4,3) = tablero[2][1] = 8
+Por ej, la posicion (2,1) = tablero[2][1] = 8
 tablero = [[1,2,3],[4,5,6],[7,8,9]] -> 1 4 7
                                        2 5 8
                                        3 6 9
@@ -23,7 +24,7 @@ En las tuplas se especifica la coordenada X,Y donde se coloco y el valor que ten
 La lista puede ser una mezcla de las 2
 Por ej:
 P1 = ["TATETI","SUDOKU","SOPA","DE","LETRAS"]
-P2 = [["TATETI",(0,0,0),(0,1,0),(0,2,"D"),(0,3,0),(0,4,"K"),(0,5,0)],"SUDOKU","SOPA","DE","LETRAS"]
+P2 = [["TATETI",(0,0,0),(0,1,0),(0,2,"T"),(0,3,0),(0,4,"T"),(0,5,0)],"SUDOKU","SOPA","DE","LETRAS"]
 """
 
 def totalCaracteres(lista):
@@ -427,16 +428,52 @@ def generaSopa():
     imprimeTablero(tablero)
     return tablero
 
+def encuentraPalabra(tablero,palabra):
+    """
+    encuentraPlabra : List(List(Str)) Str -> Tuple(Str,Tuple(Int,Int),Str,Str)
+    encuentraPalabra recibe un tablero y una palabra, devuelve una tupla con 4 elementos
+    El primer elemento es la palabra, el segundo es una tupla con 2 elementos X,Y que representan la coordenada inicial
+    El tercer elemento es la direccion y el cuarto el sentido
+    """
+    for columna in tablero:
+        for fila in columna:
+            if fila == palabra[0]:
+                
+
+def resuelveSopa():
+    archivoSopa = open("sopagenerada.txt","r")
+    archivoPalabras = open("listaPalabras.txt","r")
+    tableroJunto = archivoSopa.readlines()
+    palabras = archivoPalabras.readlines()
+    tableroSep = []
+    for i in tableroJunto:
+        columna = []
+        for x in i:
+            columna += [x]
+        tableroSep += columna
+    listaencontradas = []
+    for palabra in palabras:
+        encontrada = encuentraPalabra(tableroSep,palabra)
+        listaencontradas += [encontrada]
+    imprimeTablero(tableroSep)
+    print(listaencontradas)
+    return
+
 def main():
     print("Elija una opcion:")
     print("1- Generar sopa de letras\n2- Resolver sopa automaticamente")
     eleccion = int(input(""))
     if eleccion == 1:
-        generaSopa()
+        h = generaSopa()
+        lugar = getcwd()
+
+        guardado = open(lugar + "\sopagenerada.txt","w")
+        for fila in h:
+            filas = ""
+            for columna in fila:
+                filas = filas + columna
+            filas = filas + "\n"
+            guardado.write(filas)
+        guardado.close()
     elif eleccion == 2:
         resuelveSopa()
-
-def resuelveSopa():
-    print("Yo mama so fat")
-
-generaSopa()
