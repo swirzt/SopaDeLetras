@@ -347,6 +347,22 @@ def ponerPalabra(tablero,posini,direccion,palabra):
         tp = (tp[0]+tp[2],tp[1]+tp[3],tp[2],tp[3])
     return tuplas
 
+def quitarPalabra(tablero,postupla):
+    """
+    Representamos las posiciones a revertir con una tupla de 3 elementos (columna,fila,valoranterior)
+    quitarPalabra : List(List(Str | Int)) List(Tuple(Int)) -> List(List(Str | Int))
+    quitarPlabra recibe un tablero y una lista de posiciones a revertir, devuelve el tablero con los valores anteriores a poner la palabra
+    Ejemplos:
+    quitarPalabra([["H","O","L","A"],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[(0,0,0),(0,1,0),(0,2,0),(0,3,0)]) => [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    """
+    for i in postupla:
+        tablero[i[0]][i[1]] = i[2]
+    return tablero
+
+def quitarPalabraTest():
+    assert quitarPalabra([["H","O","L","A"],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[(0,0,0),(0,1,0),(0,2,0),(0,3,0)]) == [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+quitarPalabraTest()
+
 def ponerPalabras(tablero,palabras):
     """
     Representamos el tablero con una matriz NxN
@@ -364,10 +380,19 @@ def ponerPalabras(tablero,palabras):
         shuffle(Lugares)
         sePuede = False
         p = 0
-        while not sePuede and p < len(lugares):
+        while not sePuede and p < len(Lugares):
             if validarPalabraLugar(tablero,Lugares[p],direccionP,palabra[0]):
                 sePuede = True
                 reemplazo = ponerPalabra(tablero,Lugares[p],direccionP,palabra[0])
+                palabras[palabra[1]] = reemplazo
+                ponerPalabras(tablero,palabras)
+                if type(palabras[palabra[1]+1]) == str:
+                    sePuede = False
+                quitarPalabra(tablero,reemplazo)
+        if type(palabras[palabra[1]]) == str:
+            return tablero
+    return tablero
+        
 
 
 def generaSopa():
@@ -382,6 +407,12 @@ def generaSopa():
     tamaño = tamaño + 2 #Si sumar 2 no funciona, multiplicar por 2
     tablero = generaTablero(tamaño)
     ponerPalabras(tablero,palabras)
+    contador = 1
+    while type(palabras[0]) == str and contador < len(palabras):
+        palabras = palabras[1:] + palabras[0]
+        ponerPalabras(tablero,palabras)
+    if type(palabras[0]) == str:
+        return "NO SE PUDO"
     tablero = rellenarTablero(tablero)
     return tablero
 
