@@ -432,9 +432,16 @@ def main():
     print("1- Generar sopa de letras\n2- Resolver sopa automaticamente")
     eleccion = int(input(""))
     if eleccion == 1:
-        generaSopa()
-    elif eleccion == 2:
-        resuelveSopa()
-
-def resuelveSopa():
-    
+        h = generaSopa()
+        guardado = open("sopagenerada.txt","w")
+        for fila in h:
+            filas = ""
+            for columna in fila:
+                filas = filas + columna
+            guardado.write(filas)
+        guardado.close()
+    #elif eleccion == 2:
+        #resuelveSopa()
+main()
+#def resuelveSopa():
+ #   archivo = open("archivosopa.txt","w")
