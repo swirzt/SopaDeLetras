@@ -428,9 +428,63 @@ def generaSopa():
     imprimeTablero(tablero)
     return tablero
 
+def checkPos(tablero,pos,palabra):
+    """
+    checkPos : List(List(Str)) Tuple(Int,Int) Str -> Bool || List(Sring)
+    """
+    print(tablero)
+    altoAncho = len(tablero)
+    largoPalabra = len(palabra)
+    if pos[0] <= altoAncho - largoPalabra: #Derecha (+X)
+        copiaPos = (pos[0],pos[1])
+        palabraPos = ""
+        for x in range(largoPalabra):
+            palabraPos += tablero[copiaPos[0]][copiaPos[1]]
+            copiaPos = (copiaPos[0]+1,copiaPos[1])
+        if palabra == palabraPos:
+            listaPos = ["Horizontal","Derecha"]
+            return listaPos
+    if pos[0] >= altoAncho - largoPalabra:
+        copiaPos = (pos[0],pos[1])
+        palabraPos = ""
+        for x in range(largoPalabra):
+            palabraPos += tablero[copiaPos[0]][copiaPos[1]]
+            copiaPos = (copiaPos[0]-1,copiaPos[1])
+        if palabra == palabraPos:
+            listaPos = ["Horizontal","Izquierda"]
+            return listaPos
+    if pos[1] >= altoAncho - largoPalabra:
+        copiaPos = (pos[0],pos[1])
+        palabraPos = ""
+        for x in range(largoPalabra):
+            palabraPos += tablero[copiaPos[0]][copiaPos[1]]
+            copiaPos = (copiaPos[0],copiaPos[1]-1)
+        if palabra == palabraPos:
+            listaPos = ["Vertical","Arriba"]
+            return listaPos
+    if pos[1] <= altoAncho - largoPalabra:
+        copiaPos = (pos[0],pos[1])
+        palabraPos = ""
+        for x in range(largoPalabra):
+            palabraPos += tablero[copiaPos[0]][copiaPos[1]]
+            copiaPos = (copiaPos[0],copiaPos[1]+1)
+        if palabra == palabraPos:
+            listaPos = ["Vertical","Abajo"]
+            return listaPos
+    if pos[0] <= altoAncho - largoPalabra and pos[1] <= altoAncho - largoPalabra:
+        copiaPos = (pos[0],pos[1])
+        palabraPos = ""
+        for x in range(largoPalabra):
+            palabraPos += tablero[copiaPos[0]][copiaPos[1]]
+            copiaPos = (copiaPos[0]+1,copiaPos[1]+1)
+        if palabra == palabraPos:
+            listaPos = ["Diagonal","Descendente"]
+            return listaPos
+    return False
+
 def encuentraPalabra(tablero,palabra):
     """
-    encuentraPlabra : List(List(Str)) Str -> Tuple(Str,Tuple(Int,Int),Str,Str)
+    encuentraPlabra : List(List(Str)) Str -> Tuple(Str,Tuple(Int,Int),Str|Str)
     encuentraPalabra recibe un tablero y una palabra, devuelve una tupla con 4 elementos
     El primer elemento es la palabra, el segundo es una tupla con 2 elementos X,Y que representan la coordenada inicial
     El tercer elemento es la direccion y el cuarto el sentido
@@ -438,23 +492,36 @@ def encuentraPalabra(tablero,palabra):
     for columna in tablero:
         for fila in columna:
             if fila == palabra[0]:
-                
+                pos = (tablero.index(columna),columna.index(fila))
+                posPalabra = checkPos(tablero,pos,palabra)
+                if type(posPalabra) == list:
+                    devuelve = (palabra,pos,posPalabra[0],posPalabra[1])
+                    return devuelve
+    devuelve = (palabra,pos,"No sabe, No contesta")
+    return devuelve
 
 def resuelveSopa():
     archivoSopa = open("sopagenerada.txt","r")
     archivoPalabras = open("listaPalabras.txt","r")
     tableroJunto = archivoSopa.readlines()
     palabras = archivoPalabras.readlines()
+    for z in range(len(palabras)):
+        if palabras.index(palabras[z]) != len(palabras)-1:
+            largopalabra = len(palabras[z])-1
+        else:
+            largopalabra = len(palabras[z])
+        palabras[z] = palabras[z][:largopalabra]
     tableroSep = []
     for i in tableroJunto:
         columna = []
-        for x in i:
-            columna += [x]
-        tableroSep += columna
+        for x in range(len(i)-1):
+            columna += [i[x]]
+        tableroSep += [columna]
     listaencontradas = []
     for palabra in palabras:
         encontrada = encuentraPalabra(tableroSep,palabra)
-        listaencontradas += [encontrada]
+        if encontrada[2] != "No sabe, No contesta":
+            listaencontradas += [encontrada]
     imprimeTablero(tableroSep)
     print(listaencontradas)
     return
@@ -477,3 +544,4 @@ def main():
         guardado.close()
     elif eleccion == 2:
         resuelveSopa()
+main()
