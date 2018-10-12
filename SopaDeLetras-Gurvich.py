@@ -1,5 +1,6 @@
 from random import randrange, shuffle
 from math import sqrt, ceil
+from os import getcwd
 #Constantes
 ABECEDARIO = ("a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z")
 LARGOABC = len(ABECEDARIO)
@@ -427,21 +428,52 @@ def generaSopa():
     imprimeTablero(tablero)
     return tablero
 
+def encuentraPalabra(tablero,palabra):
+    """
+    encuentraPlabra : List(List(Str)) Str -> Tuple(Str,Tuple(Int,Int),Str,Str)
+    encuentraPalabra recibe un tablero y una palabra, devuelve una tupla con 4 elementos
+    El primer elemento es la palabra, el segundo es una tupla con 2 elementos X,Y que representan la coordenada inicial
+    El tercer elemento es la direccion y el cuarto el sentido
+    """
+    for columna in tablero:
+        for fila in columna:
+            if fila == palabra[0]:
+                
+
+def resuelveSopa():
+    archivoSopa = open("sopagenerada.txt","r")
+    archivoPalabras = open("listaPalabras.txt","r")
+    tableroJunto = archivoSopa.readlines()
+    palabras = archivoPalabras.readlines()
+    tableroSep = []
+    for i in tableroJunto:
+        columna = []
+        for x in i:
+            columna += [x]
+        tableroSep += columna
+    listaencontradas = []
+    for palabra in palabras:
+        encontrada = encuentraPalabra(tableroSep,palabra)
+        listaencontradas += [encontrada]
+    imprimeTablero(tableroSep)
+    print(listaencontradas)
+    return
+
 def main():
     print("Elija una opcion:")
     print("1- Generar sopa de letras\n2- Resolver sopa automaticamente")
     eleccion = int(input(""))
     if eleccion == 1:
         h = generaSopa()
-        guardado = open("sopagenerada.txt","w")
+        lugar = getcwd()
+
+        guardado = open(lugar + "\sopagenerada.txt","w")
         for fila in h:
             filas = ""
             for columna in fila:
                 filas = filas + columna
+            filas = filas + "\n"
             guardado.write(filas)
         guardado.close()
-    #elif eleccion == 2:
-        #resuelveSopa()
-main()
-#def resuelveSopa():
- #   archivo = open("archivosopa.txt","w")
+    elif eleccion == 2:
+        resuelveSopa()
