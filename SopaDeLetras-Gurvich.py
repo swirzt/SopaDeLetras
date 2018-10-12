@@ -309,7 +309,7 @@ def validarPalabraLugar(tablero,posini,direccion,palabra):
     Representamos posiciones con una tupla X,Y
     Representamos direccion con una tupla (0,1), (1,0) o (1,1)
     Representamos palabras con Strings y todos sus caracteres en mayúscula
-    validarPalabraLugar : List(List(Int)) Tuple(Int) Tuple(Int) Str -> Bool
+    validarPalabraLugar : List(List(Int | Str)) Tuple(Int) Tuple(Int) Str -> Bool
     validarPalabraLugar recibe un tablero, una posicion, una direccion y una palabra
     Devuelve True si se puede colocar la palabra con esas condiciones
     Ejemplos:
@@ -329,6 +329,24 @@ def validarPalabraLugarTest():
     assert validarPalabraLugar([["A","B","C"],[0,0,0],[0,0,0]],(0,2),(0,1),"OLA") == False
 validarPalabraLugarTest()
 
+def ponerPalabra(tablero,posini,direccion,palabra):
+    """
+    Representamos posiciones con una tupla X,Y
+    Representamos direccion con una tupla (0,1), (1,0) o (1,1)
+    Representamos palabras con Strings y todos sus caracteres en mayúscula
+    ponerPalabra : List(List(Int | Str)) Tuple(Int) Tuple(Int) Str -> List(Str | Tuple)
+    ponerPalabra recibe un tablero, una posicion, una direccion y una palabra
+    Coloca la palabra en el tablero comenzando por la posicion inicial y siguiendo en la direccion dada
+    Devuelve una lista con la palabra como primer elemento y tuplas que representan la posicion y el valor que tenian en donde se posicionaron las letras
+    """
+    tuplas = []
+    tp = (posini[0],posini[1],direccion[0],direccion[1])
+    for i in palabra:
+        tuplas += [(tp[0],tp[1],tablero[tp[0]][tp[1]])]
+        tablero[tp[0]][tp[1]] = i
+        tp = (tp[0]+tp[2],tp[1]+tp[3],tp[2],tp[3])
+    return tuplas
+
 def ponerPalabras(tablero,palabras):
     """
     Representamos el tablero con una matriz NxN
@@ -344,8 +362,13 @@ def ponerPalabras(tablero,palabras):
             palabras[palabra[1]] = palabra[0] #Reemplazamos la palabra en la lista por la revertida
         Lugares = lugares(tablero,direccionP,palabra[0])
         shuffle(Lugares)
-        for p in Lugares:
-            v = validarLugar(tablero,palabra[0][0],p)
+        sePuede = False
+        p = 0
+        while not sePuede and p < len(lugares):
+            if validarPalabraLugar(tablero,Lugares[p],direccionP,palabra[0]):
+                sePuede = True
+                reemplazo = ponerPalabra(tablero,Lugares[p],direccionP,palabra[0])
+
 
 def generaSopa():
     palabras = generaListaPalabras()
