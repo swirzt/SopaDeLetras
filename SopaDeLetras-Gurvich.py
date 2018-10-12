@@ -284,25 +284,25 @@ def lugaresTest():
     assert lugares(generaTablero(3),(0,1),"MANO") == []
 lugaresTest()
 
-def validarLugar(tablero,letra,pos):
-    """
-    Representamos posiciones con una tupla X,Y
-    validarLugar : List(List(Int | Str)) Str Tuple(Int) -> Bool
-    validarLugar recibe un tablero, una letra y una posicion, devuelve True si la letra se puede ubica,
-    (La posicion es 0 o tiene la misma letra)
-    Ejemplos:
-    validarLugar(generaTablero(3),"A",(1,1)) => True
-    validarLugar([["A","B","C"],[0,0,0],[0,0,0]],"C",(1,0)) => False
-    """
-    lugar = tablero[pos[0]][pos[1]]
-    if letra == lugar or lugar == 0:
-        return True
-    return False
+# def validarLugar(tablero,letra,pos):
+#     """
+#     Representamos posiciones con una tupla X,Y
+#     validarLugar : List(List(Int | Str)) Str Tuple(Int) -> Bool
+#     validarLugar recibe un tablero, una letra y una posicion, devuelve True si la letra se puede ubica,
+#     (La posicion es 0 o tiene la misma letra)
+#     Ejemplos:
+#     validarLugar(generaTablero(3),"A",(1,1)) => True
+#     validarLugar([["A","B","C"],[0,0,0],[0,0,0]],"C",(1,0)) => False
+#     """
+#     lugar = tablero[pos[0]][pos[1]]
+#     if letra == lugar or lugar == 0:
+#         return True
+#     return False
 
-def validarLugarTest():
-    assert validarLugar(generaTablero(3),"A",(1,1)) == True
-    assert validarLugar([["A","B","C"],[0,0,0],[0,0,0]],"C",(0,1)) == False
-validarLugarTest()
+# def validarLugarTest():
+#     assert validarLugar(generaTablero(3),"A",(1,1)) == True
+#     assert validarLugar([["A","B","C"],[0,0,0],[0,0,0]],"C",(0,1)) == False
+# validarLugarTest()
 
 def validarPalabraLugar(tablero,posini,direccion,palabra):
     """
@@ -370,29 +370,39 @@ def ponerPalabras(tablero,palabras):
     ponerPalabras recibe un tablero vacio (todos sus elementos son 0) y una lista de palabras, devuelve el tablero con las palabras colocadas
     """
     while faltaPoner(palabras):
-        palabra = cualPoner(palabras)
+        palabraAct = cualPoner(palabras)
         direccionP = direccion()
         sentidoP = sentido(direccionP)
-        if sentidoP == 1:
-            palabra = (revertir(palabra[0]),palabra[1]) #Revertimos la palabra en la tupla
-            palabras[palabra[1]] = palabra[0] #Reemplazamos la palabra en la lista por la revertida
-        Lugares = lugares(tablero,direccionP,palabra[0])
-        shuffle(Lugares)
+        if sentidoP:
+            palabraAct = (revertir(palabraAct[0]),palabraAct[1]) #Revertimos la palabra en la tupla
+            palabras[palabraAct[1]] = palabraAct[0] #Reemplazamos la palabra en la lista por la revertida
+        listaLugares = lugares(tablero,direccionP,palabraAct[0])
+        shuffle(listaLugares)
         sePuede = False
         p = 0
-        while not sePuede and p < len(Lugares):
-            if validarPalabraLugar(tablero,Lugares[p],direccionP,palabra[0]):
+        while not sePuede and p < len(listaLugares):
+            if validarPalabraLugar(tablero,listaLugares[p],direccionP,palabraAct[0]):
                 sePuede = True
-                reemplazo = ponerPalabra(tablero,Lugares[p],direccionP,palabra[0])
-                palabras[palabra[1]] = reemplazo
+                reemplazo = ponerPalabra(tablero,listaLugares[p],direccionP,palabraAct[0])
+                palabras[palabraAct[1]] = reemplazo
                 ponerPalabras(tablero,palabras)
-                if type(palabras[palabra[1]+1]) == str:
-                    sePuede = False
-                quitarPalabra(tablero,reemplazo)
-        if type(palabras[palabra[1]]) == str:
+                if palabraAct[1] < len(palabras)-1 and type(palabras[palabraAct[1]+1]) == str:
+                        sePuede = False
+                        quitarPalabra(tablero,reemplazo)
+            p += 1
+        if type(palabras[palabraAct[1]]) == str:
             return tablero
     return tablero
         
+def imprimeTablero(tablero):
+    """
+    """
+    largoAlto = len(tablero)
+    for y in range(largoAlto):
+        fila = []
+        for x in range(largoAlto):
+            fila += tablero[x][y]
+        print(fila)
 
 
 def generaSopa():
@@ -414,6 +424,7 @@ def generaSopa():
     if type(palabras[0]) == str:
         return "NO SE PUDO"
     tablero = rellenarTablero(tablero)
+    imprimeTablero(tablero)
     return tablero
 
 def main():
@@ -427,3 +438,5 @@ def main():
 
 def resuelveSopa():
     print("Yo mama so fat")
+
+generaSopa()
