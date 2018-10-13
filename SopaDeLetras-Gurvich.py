@@ -2,7 +2,7 @@ from random import randrange, shuffle
 from math import sqrt, ceil
 from os import getcwd
 #Constantes
-ABECEDARIO = ("a","b","c","d","e","f","g","h","i","j","k","l","m","n","ñ","o","p","q","r","s","t","u","v","w","x","y","z")
+ABECEDARIO = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
 LARGOABC = len(ABECEDARIO)
 
 #Tipo de dato
@@ -285,26 +285,6 @@ def lugaresTest():
     assert lugares(generaTablero(3),(0,1),"MANO") == []
 lugaresTest()
 
-# def validarLugar(tablero,letra,pos):
-#     """
-#     Representamos posiciones con una tupla X,Y
-#     validarLugar : List(List(Int | Str)) Str Tuple(Int) -> Bool
-#     validarLugar recibe un tablero, una letra y una posicion, devuelve True si la letra se puede ubica,
-#     (La posicion es 0 o tiene la misma letra)
-#     Ejemplos:
-#     validarLugar(generaTablero(3),"A",(1,1)) => True
-#     validarLugar([["A","B","C"],[0,0,0],[0,0,0]],"C",(1,0)) => False
-#     """
-#     lugar = tablero[pos[0]][pos[1]]
-#     if letra == lugar or lugar == 0:
-#         return True
-#     return False
-
-# def validarLugarTest():
-#     assert validarLugar(generaTablero(3),"A",(1,1)) == True
-#     assert validarLugar([["A","B","C"],[0,0,0],[0,0,0]],"C",(0,1)) == False
-# validarLugarTest()
-
 def validarPalabraLugar(tablero,posini,direccion,palabra):
     """
     Representamos posiciones con una tupla X,Y
@@ -432,7 +412,6 @@ def checkPos(tablero,pos,palabra):
     """
     checkPos : List(List(Str)) Tuple(Int,Int) Str -> Bool || List(Sring)
     """
-    print(tablero)
     altoAncho = len(tablero)
     largoPalabra = len(palabra)
     if pos[0] <= altoAncho - largoPalabra: #Derecha (+X)
@@ -484,10 +463,13 @@ def checkPos(tablero,pos,palabra):
 
 def encuentraPalabra(tablero,palabra):
     """
+    Representamos palabras con strings
     encuentraPlabra : List(List(Str)) Str -> Tuple(Str,Tuple(Int,Int),Str|Str)
     encuentraPalabra recibe un tablero y una palabra, devuelve una tupla con 4 elementos
     El primer elemento es la palabra, el segundo es una tupla con 2 elementos X,Y que representan la coordenada inicial
     El tercer elemento es la direccion y el cuarto el sentido
+    Ejemplos:
+    encuentraPalabras()
     """
     for columna in tablero:
         for fila in columna:
@@ -497,7 +479,7 @@ def encuentraPalabra(tablero,palabra):
                 if type(posPalabra) == list:
                     devuelve = (palabra,pos,posPalabra[0],posPalabra[1])
                     return devuelve
-    devuelve = (palabra,pos,"No sabe, No contesta")
+    devuelve = (palabra,"No sabe, No contesta")
     return devuelve
 
 def resuelveSopa():
@@ -505,6 +487,8 @@ def resuelveSopa():
     archivoPalabras = open("listaPalabras.txt","r")
     tableroJunto = archivoSopa.readlines()
     palabras = archivoPalabras.readlines()
+    archivoSopa.close()
+    archivoPalabras.close()
     for z in range(len(palabras)):
         if palabras.index(palabras[z]) != len(palabras)-1:
             largopalabra = len(palabras[z])-1
@@ -520,7 +504,7 @@ def resuelveSopa():
     listaencontradas = []
     for palabra in palabras:
         encontrada = encuentraPalabra(tableroSep,palabra)
-        if encontrada[2] != "No sabe, No contesta":
+        if type(encontrada[1]) == tuple:
             listaencontradas += [encontrada]
     imprimeTablero(tableroSep)
     print(listaencontradas)
@@ -533,7 +517,6 @@ def main():
     if eleccion == 1:
         h = generaSopa()
         lugar = getcwd()
-
         guardado = open(lugar + "\sopagenerada.txt","w")
         for fila in h:
             filas = ""
