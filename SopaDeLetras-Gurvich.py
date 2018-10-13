@@ -423,43 +423,44 @@ def checkPos(tablero,pos,palabra):
     """
     altoAncho = len(tablero)
     largoPalabra = len(palabra)
-    if pos[0] <= altoAncho - largoPalabra: #Derecha (+X)
+    maxDerInf = altoAncho - largoPalabra
+    if pos[0] <= maxDerInf: #Abajo (+Y)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         for x in range(largoPalabra):
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0]+1,copiaPos[1])
         if palabra == palabraPos:
-            listaPos = ["Horizontal","Derecha"]
+            listaPos = ["Vertical","Abajo"]
             return listaPos
-    if pos[0] >= altoAncho - largoPalabra:
+    if pos[0] >= largoPalabra-1: #Arriba (-Y)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         for x in range(largoPalabra):
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0]-1,copiaPos[1])
         if palabra == palabraPos:
-            listaPos = ["Horizontal","Izquierda"]
+            listaPos = ["Vertical","Arriba"]
             return listaPos
-    if pos[1] >= altoAncho - largoPalabra:
+    if pos[1] > largoPalabra-1: #Izquierda (-X)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         for x in range(largoPalabra):
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0],copiaPos[1]-1)
         if palabra == palabraPos:
-            listaPos = ["Vertical","Abajo"]
+            listaPos = ["Horizontal","Izquierda"]
             return listaPos
-    if pos[1] <= altoAncho - largoPalabra:
+    if pos[1] <= maxDerInf: #Derecha (+X)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         for x in range(largoPalabra):
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0],copiaPos[1]+1)
         if palabra == palabraPos:
-            listaPos = ["Vertical","Arriba"]
+            listaPos = ["Horizontal","Derecha"]
             return listaPos
-    if pos[0] <= altoAncho - largoPalabra and pos[1] <= altoAncho - largoPalabra:
+    if pos[0] <= altoAncho - largoPalabra and pos[1] <= altoAncho - largoPalabra: #Diagonal (+Y +X)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         for x in range(largoPalabra):
@@ -475,16 +476,16 @@ def encuentraPalabra(tablero,palabra):
     Representamos palabras con strings
     encuentraPlabra : List(List(Str)) Str -> Tuple(Str,Tuple(Int,Int),Str|Str)
     encuentraPalabra recibe un tablero y una palabra, devuelve una tupla con 4 elementos
-    El primer elemento es la palabra, el segundo es una tupla con 2 elementos X,Y que representan la coordenada inicial
+    El primer elemento es la palabra, el segundo es una tupla con 2 elementos Y,X que representan la coordenada inicial
     El tercer elemento es la direccion y el cuarto el sentido
     Ejemplos:
     encuentraPalabra([["C","A","S","A"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],"CASA") => ("CASA",(0,0),"Vertical","Abajo")
     encuentraPalabra(generaTablero(5),"PERRO") => ("PERRO",(0,0),"No","Encontrada")
     """
-    for columna in tablero:
-        for fila in columna:
-            if fila == palabra[0]:
-                pos = (tablero.index(columna),columna.index(fila))
+    for fila in tablero:
+        for columna in fila:
+            if columna == palabra[0]:
+                pos = (tablero.index(fila),columna.index(columna))
                 posPalabra = checkPos(tablero,pos,palabra)
                 if type(posPalabra) == list:
                     devuelve = (palabra,pos,posPalabra[0],posPalabra[1])
@@ -493,7 +494,7 @@ def encuentraPalabra(tablero,palabra):
     return devuelve
 
 def encuentraPalabraTest():
-    assert encuentraPalabra([["C","A","S","A"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],"CASA") == ("CASA",(0,0),"Vertical","Abajo")
+    assert encuentraPalabra([["C","A","S","A"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],"CASA") == ("CASA",(0,0),"Horizontal","Derecha")
     assert encuentraPalabra(generaTablero(5),"PERRO") == ("PERRO",(0,0),"No","Encontrada")
 encuentraPalabraTest()
 
@@ -505,23 +506,23 @@ def resuelveSopa():
     archivoSopa.close()
     archivoPalabras.close()
     for z in range(len(palabras)):
-        if palabras.index(palabras[z]) != len(palabras)-1:
-            largopalabra = len(palabras[z])-1
+        if palabras[z+1:] != []: #Significa que palabras[z] no es el ultimo elemento
+            largopalabra = len(palabras[z])-1 #Para evitar el caracter \n
         else:
             largopalabra = len(palabras[z])
         palabras[z] = palabras[z][:largopalabra]
-    tableroSep = []
+    tableroSeparado = []
     for i in tableroJunto:
-        columna = []
-        for x in range(len(i)-1):
-            columna += [i[x]]
-        tableroSep += [columna]
+        fila = []
+        for x in range(len(i)-1): #Para evitar el caracter \n
+            fila += [i[x]]
+        tableroSeparado += [fila]
     listaencontradas = []
     for palabra in palabras:
-        encontrada = encuentraPalabra(tableroSep,palabra)
-        if encontrada[2] =! "No":
+        encontrada = encuentraPalabra(tableroSeparado,palabra)
+        if encontrada[2] != "No":
             listaencontradas += [encontrada]
-    imprimeTablero(tableroSep)
+    imprimeTablero(tableroSeparado)
     print(listaencontradas)
     return
 
@@ -542,4 +543,4 @@ def main():
         guardado.close()
     elif eleccion == 2:
         resuelveSopa()
-#main()
+main()
