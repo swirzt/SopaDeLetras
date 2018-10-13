@@ -433,7 +433,6 @@ def checkPos(tablero,pos,palabra):
         if palabra == palabraPos:
             listaPos = ["Vertical","Abajo"]
             return listaPos
-        print(palabraPos)
     if pos[0] >= largoPalabra-1: #Arriba (-Y)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
