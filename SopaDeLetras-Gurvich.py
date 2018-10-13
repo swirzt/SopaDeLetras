@@ -433,6 +433,7 @@ def checkPos(tablero,pos,palabra):
         if palabra == palabraPos:
             listaPos = ["Vertical","Abajo"]
             return listaPos
+        print(palabraPos)
     if pos[0] >= largoPalabra-1: #Arriba (-Y)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
@@ -485,13 +486,13 @@ def encuentraPalabra(tablero,palabra):
     for fila in tablero:
         for columna in fila:
             if columna == palabra[0]:
-                pos = (tablero.index(fila),columna.index(columna))
+                pos = (tablero.index(fila),fila.index(columna))
                 posPalabra = checkPos(tablero,pos,palabra)
                 if type(posPalabra) == list:
                     devuelve = (palabra,pos,posPalabra[0],posPalabra[1])
                     return devuelve
-    devuelve = (palabra,(0,0),"No","Encontrada")
-    return devuelve
+    noEsta = (palabra,(0,0),"No","Encontrada")
+    return noEsta
 
 def encuentraPalabraTest():
     assert encuentraPalabra([["C","A","S","A"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],"CASA") == ("CASA",(0,0),"Horizontal","Derecha")
