@@ -9,12 +9,13 @@ LARGOABC = len(ABECEDARIO)
 """
 Representamos un tablero de Sopa de letras con Listas de Listas (matriz)
 Un string representa un caracter en la sopa y los espacios vacios son 0 (Int)
-Las listas dentro representan columnas, los indices de sus elementos representan las posicion Y, con Y invertido (Positivos hacia abajo)
+Las listas dentro representan filas, los indices de sus elementos representan las posicion X, y las filas el Y con Y invertido (Positivos hacia abajo)
 Contando desde 0
-Por ej, la posicion (2,1) = tablero[2][1] = 8
-tablero = [[1,2,3],[4,5,6],[7,8,9]] -> 1 4 7
-                                       2 5 8
-                                       3 6 9
+Representamos un posicion como (y,x)
+Por ej, la posicion (1,2) = tablero[1][2] = 6
+tablero = [[1,2,3],[4,5,6],[7,8,9]] -> 1 2 3
+                                       4 5 6
+                                       7 8 9
 """
 """
 La lista de palabras puede tomar forma de:
@@ -160,7 +161,7 @@ def generaTablero(n):
     generaTablero(1) => [[0]]
     generaTablero(4) => [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
     """
-    tablero = [[0 for x in range(n)] for i in range(n)]
+    tablero = [[0 for x in range(n)] for y in range(n)]
     return tablero
 
 def generaTableroTest():
@@ -226,15 +227,15 @@ cualPonerTest()
 
 def direccion():
     """
-    Representamos direcciones con tuplas, horizontal = (1,0), vertical = (0,1) y diagonal = (1,1)
+    Representamos direcciones con tuplas, horizontal = (0,1), vertical = (1,0) y diagonal = (1,1)
     direccion : -> tuple(Int)
     direccion devuelve, al ser llamada, una tupla que representa la direccion que tomara la palabra elegida al azar
     """
     a = randrange(3)
     if a == 0:
-        return (1,0)
-    elif a == 1:
         return (0,1)
+    elif a == 1:
+        return (1,0)
     else:
         return (1,1)
 
@@ -265,18 +266,18 @@ def lugares(tablero,direccion,palabra):
     anchoAlto = len(tablero)
     lpalabra = len(palabra)
     posibles = []
-    if direccion == (1,0):
+    if direccion == (0,1):
         maxX = anchoAlto - lpalabra + 1
         maxY = anchoAlto
-    elif direccion == (0,1):
+    elif direccion == (1,0):
         maxX = anchoAlto
         maxY = anchoAlto - lpalabra + 1
     else:
         maxX = anchoAlto - lpalabra + 1
         maxY = anchoAlto - lpalabra + 1
-    for x in range(maxX):
-            for y in range(maxY):
-                posibles += [(x,y)]
+    for y in range(maxY):
+            for x in range(maxX):
+                posibles += [(y,x)]
     return posibles
 
 def lugaresTest():
@@ -287,7 +288,7 @@ lugaresTest()
 
 def validarPalabraLugar(tablero,posini,direccion,palabra):
     """
-    Representamos posiciones con una tupla X,Y
+    Representamos posiciones con una tupla Y.X
     Representamos direccion con una tupla (0,1), (1,0) o (1,1)
     Representamos palabras con Strings y todos sus caracteres en mayúscula
     validarPalabraLugar : List(List(Int | Str)) Tuple(Int) Tuple(Int) Str -> Bool
@@ -312,13 +313,17 @@ validarPalabraLugarTest()
 
 def ponerPalabra(tablero,posini,direccion,palabra):
     """
-    Representamos posiciones con una tupla X,Y
+    Representamos posiciones con una tupla Y,X
     Representamos direccion con una tupla (0,1), (1,0) o (1,1)
     Representamos palabras con Strings y todos sus caracteres en mayúscula
-    ponerPalabra : List(List(Int | Str)) Tuple(Int) Tuple(Int) Str -> List(Str | Tuple)
+    Se esperan tableros de dimensiones que permitan a la palabra ubicerse completamente
+    ponerPalabra : List(List(Int | Str)) Tuple(Int) Tuple(Int) Str -> List(Tuple)
     ponerPalabra recibe un tablero, una posicion, una direccion y una palabra
     Coloca la palabra en el tablero comenzando por la posicion inicial y siguiendo en la direccion dada
-    Devuelve una lista con la palabra como primer elemento y tuplas que representan la posicion y el valor que tenian en donde se posicionaron las letras
+    Devuelve una lista con tuplas que representan la posicion y el valor que tenian en donde se posicionaron las letras
+    Ejemplos:
+    ponerPalabra(generaTablero(5),(0,0),(0,1),"HOLA") => [(0,0,0),(0,1,0),(0,2,0),(0,3,0)]
+    ponerPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]],(0,0),(1,1),"HOY") => [(0,0,"H"),(1,1,"O"),(2,2,0)]
     """
     tuplas = []
     tp = (posini[0],posini[1],direccion[0],direccion[1])
@@ -328,13 +333,19 @@ def ponerPalabra(tablero,posini,direccion,palabra):
         tp = (tp[0]+tp[2],tp[1]+tp[3],tp[2],tp[3])
     return tuplas
 
+def ponerPalabraTest():
+    assert ponerPalabra(generaTablero(5),(0,0),(0,1),"HOLA") == [(0,0,0),(0,1,0),(0,2,0),(0,3,0)]
+    assert ponerPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]],(0,0),(1,1),"HOY") == [(0,0,"H"),(1,1,"O"),(2,2,0)]
+ponerPalabraTest()
+
 def quitarPalabra(tablero,postupla):
     """
-    Representamos las posiciones a revertir con una tupla de 3 elementos (columna,fila,valoranterior)
+    Representamos las posiciones a revertir con una tupla de 3 elementos (fila,columa,valoranterior)
     quitarPalabra : List(List(Str | Int)) List(Tuple(Int)) -> List(List(Str | Int))
     quitarPlabra recibe un tablero y una lista de posiciones a revertir, devuelve el tablero con los valores anteriores a poner la palabra
     Ejemplos:
     quitarPalabra([["H","O","L","A"],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[(0,0,0),(0,1,0),(0,2,0),(0,3,0)]) => [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    quitarPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,"Y",0],[0,0,0,0]],[(0,0,"H"),(1,1,"O"),(2,2,0)]) => [["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]]
     """
     for i in postupla:
         tablero[i[0]][i[1]] = i[2]
@@ -342,6 +353,7 @@ def quitarPalabra(tablero,postupla):
 
 def quitarPalabraTest():
     assert quitarPalabra([["H","O","L","A"],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[(0,0,0),(0,1,0),(0,2,0),(0,3,0)]) == [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    assert quitarPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,"Y",0],[0,0,0,0]],[(0,0,"H"),(1,1,"O"),(2,2,0)]) == [["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]]
 quitarPalabraTest()
 
 def ponerPalabras(tablero,palabras):
@@ -351,40 +363,37 @@ def ponerPalabras(tablero,palabras):
     ponerPalabras recibe un tablero vacio (todos sus elementos son 0) y una lista de palabras, devuelve el tablero con las palabras colocadas
     """
     while faltaPoner(palabras):
-        palabraAct = cualPoner(palabras)
+        palabraActual = cualPoner(palabras)
         direccionP = direccion()
         sentidoP = sentido(direccionP)
         if sentidoP:
-            palabraAct = (revertir(palabraAct[0]),palabraAct[1]) #Revertimos la palabra en la tupla
-            palabras[palabraAct[1]] = palabraAct[0] #Reemplazamos la palabra en la lista por la revertida
-        listaLugares = lugares(tablero,direccionP,palabraAct[0])
+            palabraActual = (revertir(palabraActual[0]),palabraActual[1]) #Revertimos la palabra en la tupla
+            palabras[palabraActual[1]] = palabraActual[0] #Reemplazamos la palabra en la lista por la revertida
+        listaLugares = lugares(tablero,direccionP,palabraActual[0])
         shuffle(listaLugares)
         sePuede = False
         p = 0
         while not sePuede and p < len(listaLugares):
-            if validarPalabraLugar(tablero,listaLugares[p],direccionP,palabraAct[0]):
+            if validarPalabraLugar(tablero,listaLugares[p],direccionP,palabraActual[0]):
                 sePuede = True
-                reemplazo = ponerPalabra(tablero,listaLugares[p],direccionP,palabraAct[0])
-                palabras[palabraAct[1]] = reemplazo
+                reemplazo = ponerPalabra(tablero,listaLugares[p],direccionP,palabraActual[0])
+                palabras[palabraActual[1]] = reemplazo
                 ponerPalabras(tablero,palabras)
-                if palabraAct[1] < len(palabras)-1 and type(palabras[palabraAct[1]+1]) == str:
+                if palabraActual[1] < len(palabras)-1 and type(palabras[palabraActual[1]+1]) == str:
                         sePuede = False
                         quitarPalabra(tablero,reemplazo)
             p += 1
-        if type(palabras[palabraAct[1]]) == str:
+        if type(palabras[palabraActual[1]]) == str:
             return tablero
     return tablero
         
 def imprimeTablero(tablero):
     """
+    imprimeTablero : List(List(Str | Int) -> NONE
+    imprimeTablero recibe un tablero e imprime sus filas una por una
     """
-    largoAlto = len(tablero)
-    for y in range(largoAlto):
-        fila = []
-        for x in range(largoAlto):
-            fila += tablero[x][y]
+    for fila in tablero:
         print(fila)
-
 
 def generaSopa():
     palabras = generaListaPalabras()
@@ -439,7 +448,7 @@ def checkPos(tablero,pos,palabra):
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0],copiaPos[1]-1)
         if palabra == palabraPos:
-            listaPos = ["Vertical","Arriba"]
+            listaPos = ["Vertical","Abajo"]
             return listaPos
     if pos[1] <= altoAncho - largoPalabra:
         copiaPos = (pos[0],pos[1])
@@ -448,7 +457,7 @@ def checkPos(tablero,pos,palabra):
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0],copiaPos[1]+1)
         if palabra == palabraPos:
-            listaPos = ["Vertical","Abajo"]
+            listaPos = ["Vertical","Arriba"]
             return listaPos
     if pos[0] <= altoAncho - largoPalabra and pos[1] <= altoAncho - largoPalabra:
         copiaPos = (pos[0],pos[1])
@@ -469,7 +478,8 @@ def encuentraPalabra(tablero,palabra):
     El primer elemento es la palabra, el segundo es una tupla con 2 elementos X,Y que representan la coordenada inicial
     El tercer elemento es la direccion y el cuarto el sentido
     Ejemplos:
-    encuentraPalabras()
+    encuentraPalabra([["C","A","S","A"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],"CASA") => ("CASA",(0,0),"Vertical","Abajo")
+    encuentraPalabra(generaTablero(5),"PERRO") => ("PERRO",(0,0),"No","Encontrada")
     """
     for columna in tablero:
         for fila in columna:
@@ -479,8 +489,13 @@ def encuentraPalabra(tablero,palabra):
                 if type(posPalabra) == list:
                     devuelve = (palabra,pos,posPalabra[0],posPalabra[1])
                     return devuelve
-    devuelve = (palabra,"No sabe, No contesta")
+    devuelve = (palabra,(0,0),"No","Encontrada")
     return devuelve
+
+def encuentraPalabraTest():
+    assert encuentraPalabra([["C","A","S","A"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],"CASA") == ("CASA",(0,0),"Vertical","Abajo")
+    assert encuentraPalabra(generaTablero(5),"PERRO") == ("PERRO",(0,0),"No","Encontrada")
+encuentraPalabraTest()
 
 def resuelveSopa():
     archivoSopa = open("sopagenerada.txt","r")
@@ -504,7 +519,7 @@ def resuelveSopa():
     listaencontradas = []
     for palabra in palabras:
         encontrada = encuentraPalabra(tableroSep,palabra)
-        if type(encontrada[1]) == tuple:
+        if encontrada[2] =! "No":
             listaencontradas += [encontrada]
     imprimeTablero(tableroSep)
     print(listaencontradas)
@@ -527,4 +542,4 @@ def main():
         guardado.close()
     elif eleccion == 2:
         resuelveSopa()
-main()
+#main()
