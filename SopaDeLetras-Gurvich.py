@@ -30,12 +30,12 @@ P2 = [["TATETI",(0,0,0),(0,1,0),(0,2,"T"),(0,3,0),(0,4,"T"),(0,5,0)],"SUDOKU","S
 
 def totalCaracteres(lista):
     """
-    Representamos palabras con strings y su largo con Ints
-    totalCaracteres : List(Str) -> Int
-    totalCaracteres recibe una lista de palabras y devuelve la suma total de todos sus caracteres
-    Ejemplos:
-    totalCaracteres(["Perro","gato","cobayo"]) => 15
-    totalCaracteres([]) => 0
+    - Representamos palabras con strings y su largo con Ints
+    - totalCaracteres : List(Str) -> Int
+    - totalCaracteres recibe una lista de palabras y devuelve la suma total de todos sus caracteres
+    - Ejemplos:
+    - totalCaracteres(["Perro","gato","cobayo"]) => 15
+    - totalCaracteres([]) => 0
     """
     sum = 0
     for i in lista:
@@ -49,12 +49,12 @@ totalCaracteresTest()
 
 def largoPalabraMasLarga(lista):
     """
-    Representamos palabras con strings y su largo con Ints
-    largoPalabraMasLarga : List(Str) -> Int
-    largoPalabraMasLarga recibe una lista de palabras, devuelve el largo de la palabra mas larga
-    Ejemplos:
-    largoPalabraMasLarga(["Perro","gato","Encefalograma"]) => 13
-    largoPalabraMasLarga([]) => 0
+    - Representamos palabras con strings y su largo con Ints
+    - largoPalabraMasLarga : List(Str) -> Int
+    - largoPalabraMasLarga recibe una lista de palabras, devuelve el largo de la palabra mas larga
+    - Ejemplos:
+    - largoPalabraMasLarga(["Perro","gato","Encefalograma"]) => 13
+    - largoPalabraMasLarga([]) => 0
     """
     largo = 0
     for i in lista:
@@ -69,9 +69,9 @@ largoPalabraMasLargaTest()
 
 def rellenarTablero(tablero):
     """
-    Se utilizan letras de la constante ABECEDARIO
-    rellenarTablero : List(List(Str | Int)) -> List(List(Str))
-    rellenarTablero recibe un tablero de Sopa de letras incompleto y llena los espacios vacios (0) con letras al azar del ABECEDARIO
+    - Se utilizan letras de la constante ABECEDARIO
+    - rellenarTablero : List(List(Str | Int)) -> List(List(Str))
+    - rellenarTablero recibe un tablero de Sopa de letras incompleto y llena los espacios vacios (0) con letras al azar del ABECEDARIO
     """
     Nfilas = len(tablero)
     Ncolumnas = len(tablero[0])
@@ -85,12 +85,12 @@ def rellenarTablero(tablero):
 
 def revertir(str):
     """
-    revertir : Str -> Str
-    revertir recibe un string, devuelve el string invertido
-    Ejemplos:
-    revertir("hola") => "aloh"
-    revertir("Electroencefalografista") => "atsifargolafecneortcelE"
-    revertir("") => ""
+    - revertir : Str -> Str
+    - revertir recibe un string, devuelve el string invertido
+    - Ejemplos:
+    - revertir("hola") => "aloh"
+    - revertir("Electroencefalografista") => "atsifargolafecneortcelE"
+    - revertir("") => ""
     """
     nuevoStr = ""
     for i in str:
@@ -105,14 +105,14 @@ revertirTest()
 
 def palabraIncluida(palabra,lista):
     """
-    Representamos una palabra con un string
-    palabraIncluida : List(Str) List(List(Str)) -> Bool
-    palabraIncluida recibe una palabra y una lista de palabras, devuelve True si la palabra (o su inversa) se encuentra en la lista o incluida dentro de otra palabra
-    Ejemplos:
-    palabraIncluida("ola",["arena","mar","ola","playa"]) => True
-    palabraIncluida("no",["yo","tu","el","nosotros","vosotros","ellos"]) => True
-    palabraIncluida("True",[]) => False
-    palabraIncluida("comer",["fisurar","remocar","limpiar"]) => True
+    - Representamos una palabra con un string
+    - palabraIncluida : List(Str) List(List(Str)) -> Bool
+    - palabraIncluida recibe una palabra y una lista de palabras, devuelve True si la palabra (o su inversa) se encuentra en la lista o incluida dentro de otra palabra
+    - Ejemplos:
+    - palabraIncluida("ola",["arena","mar","ola","playa"]) => True
+    - palabraIncluida("no",["yo","tu","el","nosotros","vosotros","ellos"]) => True
+    - palabraIncluida("True",[]) => False
+    - palabraIncluida("comer",["fisurar","remocar","limpiar"]) => True
     """
     for i in lista:
         if palabra in i:
@@ -130,14 +130,14 @@ palabraIncluidaTest()
 
 def eliminaIncluidos(lista):
     """
-    Representamos palabras con Strings
-    eliminaIncluidos : List(Str) -> List(Str)
-    eliminaIncluidos recibe una lista de palabras (solo strings)
-    Devuelve la lista sin las palabras repetidas o que se incluyen dentro de otras
-    Ejemplos:
-    eliminaIncluidos(["ola","arena","mar","ola","hola","playa"]) => ["arena","mar","hola","playa"]
-    eliminaIncluidos(["comer","fisurar","remocar","limpiar"]) => ["fisurar","remocar","limpiar"]
-    eliminaIncluidos(["chau","tirar","saludar"]) => ["chau","tirar","saludar"]
+    - Representamos palabras con Strings
+    - eliminaIncluidos : List(Str) -> List(Str)
+    - eliminaIncluidos recibe una lista de palabras (solo strings)
+    - Devuelve la lista sin las palabras repetidas o que se incluyen dentro de otras
+    - Ejemplos:
+    - eliminaIncluidos(["ola","arena","mar","ola","hola","playa"]) => ["arena","mar","hola","playa"]
+    - eliminaIncluidos(["comer","fisurar","remocar","limpiar"]) => ["fisurar","remocar","limpiar"]
+    - eliminaIncluidos(["chau","tirar","saludar"]) => ["chau","tirar","saludar"]
     """
     for palabra in lista:
         i = lista.index(palabra)
@@ -154,12 +154,12 @@ eliminaIncluidosTest()
 
 def generaTablero(n):
     """
-    generaTablero : Int -> List(List(Int))
-    generaTablero recibe un numero natural N, devuelve una matriz de NxN con todos sus elementos 0
-    Ejemplos:
-    generaTablero(3) => [[0,0,0],[0,0,0],[0,0,0]]
-    generaTablero(1) => [[0]]
-    generaTablero(4) => [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    - generaTablero : Int -> List(List(Int))
+    - generaTablero recibe un numero natural N, devuelve una matriz de NxN con todos sus elementos 0
+    - Ejemplos:
+    - generaTablero(3) => [[0,0,0],[0,0,0],[0,0,0]]
+    - generaTablero(1) => [[0]]
+    - generaTablero(4) => [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
     """
     tablero = [[0 for x in range(n)] for y in range(n)]
     return tablero
@@ -178,20 +178,19 @@ def generaListaPalabras():
         palabra = input("Ingrese la palabra n°" + str(contador) + ": ")
         lista += [palabra]
         contador += 1
-    for i in lista:
-        p = lista.index(i)
-        lista[p] = i.upper()
+    for i in len(lista):
+        lista[i] = lista[i].upper()
     return lista
 
 def faltaPoner(palabras):
     """
-    faltaPoner : List(Str) | List(List(Str | Tuple(Int))) -> Bool
-    faltaPoner recibe una lista palabras y devuelve True si aun quedan palabras por colocar
-    (si en la lista principal hay strings)
-    Ejemplos:
-    faltaPoner(["PERRO","GATO","PAJARO"]) => True
-    faltaPoner([["PERRO",(1,2),(3,1)],"GATO","PAJARO"]) => True
-    faltaPoner([["PERRO",(1,2),(3,1)],["GATO",(3,1),(4,5)],["PAJARO",(6,7),(9,8)]]) => False
+    - faltaPoner : List(Str) | List(List(Str | Tuple(Int))) -> Bool
+    - faltaPoner recibe una lista palabras y devuelve True si aun quedan palabras por colocar
+    - (si en la lista principal hay strings)
+    - Ejemplos:
+    - faltaPoner(["PERRO","GATO","PAJARO"]) => True
+    - faltaPoner([["PERRO",(1,2),(3,1)],"GATO","PAJARO"]) => True
+    - faltaPoner([["PERRO",(1,2),(3,1)],["GATO",(3,1),(4,5)],["PAJARO",(6,7),(9,8)]]) => False
     """
     for i in palabras:
         if type(i) == str:
@@ -206,13 +205,13 @@ faltaPonerTest()
 
 def cualPoner(palabras):
     """
-    cualPoner : List(Str) | List(List(Tuple(Int) | Str)) -> Tuple(Str | Int)
-    cualPoner recibe una lista de palabras con al menos una no colocada en el tablero (no reemplazada por una lista de tuplas)
-    Devuelve una tupla con la palabra y su indice en la lista
-    Ejemplos:
-    cualPoner(["PERRO","GATO","PAJARO"]) => ("PERRO",0)
-    cualPoner(["PERRO",(1,2),(3,1)],"GATO","PAJARO"]) => ("GATO",1)
-    cualPoner([["PERRO",(1,2),(3,1)],["GATO",(3,1),(4,5)],["PAJARO",(6,7),(9,8)]],"OSO") => ("OSO",3)
+    - cualPoner : List(Str) | List(List(Tuple(Int) | Str)) -> Tuple(Str | Int)
+    - cualPoner recibe una lista de palabras con al menos una no colocada en el tablero (no reemplazada por una lista de tuplas)
+    - Devuelve una tupla con la palabra y su indice en la lista
+    - Ejemplos:
+    - cualPoner(["PERRO","GATO","PAJARO"]) => ("PERRO",0)
+    - cualPoner(["PERRO",(1,2),(3,1)],"GATO","PAJARO"]) => ("GATO",1)
+    - cualPoner([["PERRO",(1,2),(3,1)],["GATO",(3,1),(4,5)],["PAJARO",(6,7),(9,8)]],"OSO") => ("OSO",3)
     """
     for i in palabras:
         if type(i) == str:
@@ -227,9 +226,9 @@ cualPonerTest()
 
 def direccion():
     """
-    Representamos direcciones con tuplas, horizontal = (0,1), vertical = (1,0) y diagonal = (1,1)
-    direccion : -> tuple(Int)
-    direccion devuelve, al ser llamada, una tupla que representa la direccion que tomara la palabra elegida al azar
+    - Representamos direcciones con tuplas, horizontal = (0,1), vertical = (1,0) y diagonal = (1,1)
+    - direccion : -> tuple(Int)
+    - direccion devuelve, al ser llamada, una tupla que representa la direccion que tomara la palabra elegida al azar
     """
     a = randrange(3)
     if a == 0:
@@ -241,9 +240,9 @@ def direccion():
 
 def sentido(direccion):
     """
-    Representamos sentido con un entero entre 0 y 1, 0 representa "normal" y 1 representa "invertido"
-    sentido : tuple(Int) -> Int
-    sentido recibe la direccion que tomara la palabra y un sentido al azar, a menos que su direccion sea diagonal, en ese caso devuelve "normal" = 0
+    - Representamos sentido con un entero entre 0 y 1, 0 representa "normal" y 1 representa "invertido"
+    - sentido : tuple(Int) -> Int
+    - sentido recibe la direccion que tomara la palabra y un sentido al azar, a menos que su direccion sea diagonal, en ese caso devuelve "normal" = 0
     """
     if direccion == (1,1):
         return 0
@@ -254,14 +253,14 @@ assert sentido((1,1)) == 0
 
 def lugares(tablero,direccion,palabra):
     """
-    Representamos los lugares posibles con una lista de tuplas, cada tupla representa un par coordenado X,Y
-    lugares : List(List(Int | Str)) Tuple(Int) Str -> List(Tuple(Int))
-    lugares recibe el tablero, la direccion y la palabra
-    Devuelve todas las posiciones donde la palabra puede empezar para asegurar entrar en el tablero
-    Ejemplos:
-    lugares(generaTablero(6),(1,1),"PERRO") => [(0,0),(0,1),(1,0),(1,1)]
-    lugares(generaTablero(5),(1,0),"OLA") => [(0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(1,0),(1,1),(1,2),(1,3),(1,4),(1,5)]
-    lugares(generaTablero(3),(0,1),"MANO") => []
+    - Representamos los lugares posibles con una lista de tuplas, cada tupla representa un par coordenado X,Y
+    - lugares : List(List(Int | Str)) Tuple(Int) Str -> List(Tuple(Int))
+    - lugares recibe el tablero, la direccion y la palabra
+    - Devuelve todas las posiciones donde la palabra puede empezar para asegurar entrar en el tablero
+    - Ejemplos:
+    - lugares(generaTablero(6),(1,1),"PERRO") => [(0,0),(0,1),(1,0),(1,1)]
+    - lugares(generaTablero(5),(1,0),"OLA") => [(0,0),(0,1),(0,2),(0,3),(0,4),(0,5),(1,0),(1,1),(1,2),(1,3),(1,4),(1,5)]
+    - lugares(generaTablero(3),(0,1),"MANO") => []
     """
     anchoAlto = len(tablero)
     lpalabra = len(palabra)
@@ -288,15 +287,15 @@ lugaresTest()
 
 def validarPalabraLugar(tablero,posini,direccion,palabra):
     """
-    Representamos posiciones con una tupla Y.X
-    Representamos direccion con una tupla (0,1), (1,0) o (1,1)
-    Representamos palabras con Strings y todos sus caracteres en mayúscula
-    validarPalabraLugar : List(List(Int | Str)) Tuple(Int) Tuple(Int) Str -> Bool
-    validarPalabraLugar recibe un tablero, una posicion, una direccion y una palabra
-    Devuelve True si se puede colocar la palabra con esas condiciones
-    Ejemplos:
-    validarPalabraLugar(generaTablero(5),(0,0),(1,0),"HOLA") => True
-    validarPalabraLugar([["A","B","C"],[0,0,0],[0,0,0]],(0,2),(0,1),"OLA") => False
+    - Representamos posiciones con una tupla Y.X
+    - Representamos direccion con una tupla (0,1), (1,0) o (1,1)
+    - Representamos palabras con Strings y todos sus caracteres en mayúscula
+    - validarPalabraLugar : List(List(Int | Str)) Tuple(Int) Tuple(Int) Str -> Bool
+    - validarPalabraLugar recibe un tablero, una posicion, una direccion y una palabra
+    - Devuelve True si se puede colocar la palabra con esas condiciones
+    - Ejemplos:
+    - validarPalabraLugar(generaTablero(5),(0,0),(1,0),"HOLA") => True
+    - validarPalabraLugar([["A","B","C"],[0,0,0],[0,0,0]],(0,2),(0,1),"OLA") => False
     """
     t = (posini[0],posini[1],direccion[0],direccion[1])
     for letra in palabra:
@@ -313,17 +312,17 @@ validarPalabraLugarTest()
 
 def ponerPalabra(tablero,posini,direccion,palabra):
     """
-    Representamos posiciones con una tupla Y,X
-    Representamos direccion con una tupla (0,1), (1,0) o (1,1)
-    Representamos palabras con Strings y todos sus caracteres en mayúscula
-    Se esperan tableros de dimensiones que permitan a la palabra ubicerse completamente
-    ponerPalabra : List(List(Int | Str)) Tuple(Int) Tuple(Int) Str -> List(Tuple)
-    ponerPalabra recibe un tablero, una posicion, una direccion y una palabra
-    Coloca la palabra en el tablero comenzando por la posicion inicial y siguiendo en la direccion dada
-    Devuelve una lista con tuplas que representan la posicion y el valor que tenian en donde se posicionaron las letras
-    Ejemplos:
-    ponerPalabra(generaTablero(5),(0,0),(0,1),"HOLA") => [(0,0,0),(0,1,0),(0,2,0),(0,3,0)]
-    ponerPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]],(0,0),(1,1),"HOY") => [(0,0,"H"),(1,1,"O"),(2,2,0)]
+    - Representamos posiciones con una tupla Y,X
+    - Representamos direccion con una tupla (0,1), (1,0) o (1,1)
+    - Representamos palabras con Strings y todos sus caracteres en mayúscula
+    - Se esperan tableros de dimensiones que permitan a la palabra ubicerse completamente
+    - ponerPalabra : List(List(Int | Str)) Tuple(Int) Tuple(Int) Str -> List(Tuple)
+    - ponerPalabra recibe un tablero, una posicion, una direccion y una palabra
+    - Coloca la palabra en el tablero comenzando por la posicion inicial y siguiendo en la direccion dada
+    - Devuelve una lista con tuplas que representan la posicion y el valor que tenian en donde se posicionaron las letras
+    - Ejemplos:
+    - ponerPalabra(generaTablero(5),(0,0),(0,1),"HOLA") => [(0,0,0),(0,1,0),(0,2,0),(0,3,0)]
+    - ponerPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]],(0,0),(1,1),"HOY") => [(0,0,"H"),(1,1,"O"),(2,2,0)]
     """
     tuplas = []
     tp = (posini[0],posini[1],direccion[0],direccion[1])
@@ -340,12 +339,12 @@ ponerPalabraTest()
 
 def quitarPalabra(tablero,postupla):
     """
-    Representamos las posiciones a revertir con una tupla de 3 elementos (fila,columa,valoranterior)
-    quitarPalabra : List(List(Str | Int)) List(Tuple(Int)) -> List(List(Str | Int))
-    quitarPlabra recibe un tablero y una lista de posiciones a revertir, devuelve el tablero con los valores anteriores a poner la palabra
-    Ejemplos:
-    quitarPalabra([["H","O","L","A"],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[(0,0,0),(0,1,0),(0,2,0),(0,3,0)]) => [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-    quitarPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,"Y",0],[0,0,0,0]],[(0,0,"H"),(1,1,"O"),(2,2,0)]) => [["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]]
+    - Representamos las posiciones a revertir con una tupla de 3 elementos (fila,columa,valoranterior)
+    - quitarPalabra : List(List(Str | Int)) List(Tuple(Int)) -> List(List(Str | Int))
+    - quitarPlabra recibe un tablero y una lista de posiciones a revertir, devuelve el tablero con los valores anteriores a poner la palabra
+    - Ejemplos:
+    - quitarPalabra([["H","O","L","A"],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[(0,0,0),(0,1,0),(0,2,0),(0,3,0)]) => [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    - quitarPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,"Y",0],[0,0,0,0]],[(0,0,"H"),(1,1,"O"),(2,2,0)]) => [["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]]
     """
     for i in postupla:
         tablero[i[0]][i[1]] = i[2]
@@ -358,9 +357,9 @@ quitarPalabraTest()
 
 def ponerPalabras(tablero,palabras):
     """
-    Representamos el tablero con una matriz NxN
-    ponerPalabras : List(LIst(Int)) -> List(LIst(Int | Str))
-    ponerPalabras recibe un tablero vacio (todos sus elementos son 0) y una lista de palabras, devuelve el tablero con las palabras colocadas
+    - Representamos el tablero con una matriz NxN
+    - ponerPalabras : List(LIst(Int)) -> List(LIst(Int | Str))
+    - ponerPalabras recibe un tablero vacio (todos sus elementos son 0) y una lista de palabras, devuelve el tablero con las palabras colocadas
     """
     while faltaPoner(palabras):
         palabraActual = cualPoner(palabras)
@@ -389,8 +388,8 @@ def ponerPalabras(tablero,palabras):
         
 def imprimeTablero(tablero):
     """
-    imprimeTablero : List(List(Str | Int) -> NONE
-    imprimeTablero recibe un tablero e imprime sus filas una por una
+    - imprimeTablero : List(List(Str | Int) -> NONE
+    - imprimeTablero recibe un tablero e imprime sus filas una por una
     """
     for fila in tablero:
         print(fila)
@@ -419,7 +418,14 @@ def generaSopa():
 
 def checkPos(tablero,pos,palabra):
     """
-    checkPos : List(List(Str)) Tuple(Int,Int) Str -> Bool || List(Sring)
+    - Representamos posiciones con una tupla (y,x)
+    - checkPos : List(List(Str)) Tuple(Int,Int) Str -> Bool || List(Sring)
+    - checkPos recibe un tablero, una posicion a buscar (contiene la primer letra de la palabra) y una palabra
+    - Si la palabra se encuentra en forma vertical horizontal o diagonal desde ese punto, devuelve las indicaciones correspondientes
+    - Ejemplos:
+    - checkPos(generaTablero(5),(0,0),"GATO") => False
+    - checkPos([["H","B","C"],["P","O","G"],["K","Z","Y"]],(0,0),"HOY") => ["Diagonal","Descendente"]
+    - checkPos([["C","A","S","A"],["A","C","A","S"],["S","A","C","A"],["A","S","A","C"]],(3,3),"CASA") => ["Vertical","Arriba"]
     """
     altoAncho = len(tablero)
     largoPalabra = len(palabra)
@@ -471,21 +477,27 @@ def checkPos(tablero,pos,palabra):
             return listaPos
     return False
 
+def checkPosTest():
+    assert checkPos([["C","C","C","C"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],(0,0),"GATO") == False
+    assert checkPos([["H","B","C"],["P","O","G"],["K","Z","Y"]],(0,0),"HOY") == ["Diagonal","Descendente"]
+    assert checkPos([["C","A","S","A"],["A","C","A","S"],["S","A","C","A"],["A","S","A","C"]],(3,3),"CASA") == ["Vertical","Arriba"]
+checkPosTest()
+
 def encuentraPalabra(tablero,palabra):
     """
-    Representamos palabras con strings
-    encuentraPlabra : List(List(Str)) Str -> Tuple(Str,Tuple(Int,Int),Str|Str)
-    encuentraPalabra recibe un tablero y una palabra, devuelve una tupla con 4 elementos
-    El primer elemento es la palabra, el segundo es una tupla con 2 elementos Y,X que representan la coordenada inicial
-    El tercer elemento es la direccion y el cuarto el sentido
-    Ejemplos:
-    encuentraPalabra([["C","A","S","A"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],"CASA") => ("CASA",(0,0),"Vertical","Abajo")
-    encuentraPalabra(generaTablero(5),"PERRO") => ("PERRO",(0,0),"No","Encontrada")
+    - Representamos palabras con strings
+    - encuentraPlabra : List(List(Str)) Str -> Tuple(Str,Tuple(Int,Int),Str,Str)
+    - encuentraPalabra recibe un tablero y una palabra, devuelve una tupla con 4 elementos
+    - El primer elemento es la palabra, el segundo es una tupla con 2 elementos Y,X que representan la coordenada inicial
+    - El tercer elemento es la direccion y el cuarto el sentido
+    - Ejemplos:
+    - encuentraPalabra([["C","A","S","A"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],"CASA") => ("CASA",(0,0),"Vertical","Abajo")
+    - encuentraPalabra(generaTablero(5),"PERRO") => ("PERRO",(0,0),"No","Encontrada")
     """
-    for fila in tablero:
-        for columna in fila:
-            if columna == palabra[0]:
-                pos = (tablero.index(fila),fila.index(columna))
+    for y in range(len(tablero)):
+        for x in range(len(tablero[y])):
+            if tablero[y][x] == palabra[0]:
+                pos = (y,x)
                 posPalabra = checkPos(tablero,pos,palabra)
                 if type(posPalabra) == list:
                     devuelve = (palabra,pos,posPalabra[0],posPalabra[1])
@@ -520,8 +532,7 @@ def resuelveSopa():
     listaencontradas = []
     for palabra in palabras:
         encontrada = encuentraPalabra(tableroSeparado,palabra)
-        if encontrada[2] != "No":
-            listaencontradas += [encontrada]
+        listaencontradas += [encontrada]
     imprimeTablero(tableroSeparado)
     print(listaencontradas)
     return
