@@ -230,10 +230,10 @@ def direccion():
     - direccion : -> tuple(Int)
     - direccion devuelve, al ser llamada, una tupla que representa la direccion que tomara la palabra elegida al azar
     """
-    a = randrange(3)
-    if a == 0:
+    a = randrange(5)
+    if a == 0 or a == 3:
         return (0,1)
-    elif a == 1:
+    elif a == 1 or a == 4:
         return (1,0)
     else:
         return (1,1)
@@ -449,7 +449,7 @@ def checkPos(tablero,pos,palabra):
         if palabra == palabraPos:
             listaPos = ["Vertical","Arriba"]
             return listaPos
-    if pos[1] > largoPalabra-1: #Izquierda (-X)
+    if pos[1] >= largoPalabra-1: #Izquierda (-X)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         for x in range(largoPalabra):
