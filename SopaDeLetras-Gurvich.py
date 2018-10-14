@@ -178,7 +178,7 @@ def generaListaPalabras():
         palabra = input("Ingrese la palabra n°" + str(contador) + ": ")
         lista += [palabra]
         contador += 1
-    for i in len(lista):
+    for i in range(len(lista)):
         lista[i] = lista[i].upper()
     return lista
 
@@ -396,6 +396,7 @@ def imprimeTablero(tablero):
 
 def generaSopa():
     palabras = generaListaPalabras()
+    copiaPalabras = palabras [:]
     palabras = eliminaIncluidos(palabras)
     tamaño = totalCaracteres(palabras)
     tamaño = sqrt(tamaño)
@@ -414,7 +415,7 @@ def generaSopa():
         return "NO SE PUDO"
     tablero = rellenarTablero(tablero)
     imprimeTablero(tablero)
-    return tablero
+    return tablero,copiaPalabras
 
 def checkPos(tablero,pos,palabra):
     """
@@ -518,10 +519,7 @@ def resuelveSopa():
     archivoSopa.close()
     archivoPalabras.close()
     for z in range(len(palabras)):
-        if palabras[z+1:] != []: #Significa que palabras[z] no es el ultimo elemento
-            largopalabra = len(palabras[z])-1 #Para evitar el caracter \n
-        else:
-            largopalabra = len(palabras[z])
+        largopalabra = len(palabras[z])-1 #Para evitar el caracter \n
         palabras[z] = palabras[z][:largopalabra]
     tableroSeparado = []
     for i in tableroJunto:
@@ -545,13 +543,19 @@ def main():
         h = generaSopa()
         lugar = getcwd()
         guardado = open(lugar + "\sopagenerada.txt","w")
-        for fila in h:
+        guardaPalabra = open(lugar + "\listaPalabras.txt","w")
+        for fila in h[0]:
             filas = ""
             for columna in fila:
                 filas = filas + columna
             filas = filas + "\n"
             guardado.write(filas)
         guardado.close()
+        for palabra in h[1]:
+            palabra = palabra + "\n"
+            guardaPalabra.write(palabra)
+        guardaPalabra.close()
     elif eleccion == 2:
         resuelveSopa()
+    espera = input("") #No cierra el programa hasta oprimir ENTER
 main()
