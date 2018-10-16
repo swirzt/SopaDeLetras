@@ -392,7 +392,10 @@ def imprimeTablero(tablero):
     - imprimeTablero recibe un tablero e imprime sus filas una por una
     """
     for fila in tablero:
-        print(fila)
+        filaStr = ""
+        for columna in fila:
+            filaStr += (columna + " ")
+        print(filaStr)
 
 def generaSopa():
     palabras = generaListaPalabras()
@@ -541,9 +544,8 @@ def main():
     eleccion = int(input(""))
     if eleccion == 1:
         h = generaSopa()
-        lugar = getcwd()
-        guardado = open(lugar + "\sopagenerada.txt","w")
-        guardaPalabra = open(lugar + "\listaPalabras.txt","w")
+        guardado = open("sopagenerada.txt","w")
+        guardaPalabra = open("listaPalabras.txt","w")
         for fila in h[0]:
             filas = ""
             for columna in fila:
