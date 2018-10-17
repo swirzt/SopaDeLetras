@@ -38,8 +38,8 @@ def totalCaracteres(lista):
     - totalCaracteres([]) => 0
     """
     sum = 0
-    for i in lista:
-        sum += len(i)
+    for palabra in lista:
+        sum += len(palabra)
     return sum
 
 def totalCaracteresTest():
@@ -57,9 +57,9 @@ def largoPalabraMasLarga(lista):
     - largoPalabraMasLarga([]) => 0
     """
     largo = 0
-    for i in lista:
-        if len(i) > largo:
-            largo = len(i)
+    for palabra in lista:
+        if len(palabra) > largo:
+            largo = len(palabra)
     return largo
 
 def largoPalabraMasLargaTest():
@@ -93,8 +93,8 @@ def revertir(str):
     - revertir("") => ""
     """
     nuevoStr = ""
-    for i in str:
-        nuevoStr = i + nuevoStr
+    for letra in str:
+        nuevoStr = letra + nuevoStr
     return nuevoStr
 
 def revertirTest():
@@ -114,10 +114,10 @@ def palabraIncluida(palabra,lista):
     - palabraIncluida("True",[]) => False
     - palabraIncluida("comer",["fisurar","remocar","limpiar"]) => True
     """
-    for i in lista:
-        if palabra in i:
+    for elemento in lista:
+        if palabra in elemento:
             return True
-        if revertir(palabra) in i:
+        if revertir(palabra) in elemento:
             return True
     return False
 
@@ -192,8 +192,8 @@ def faltaPoner(palabras):
     - faltaPoner([["PERRO",(1,2),(3,1)],"GATO","PAJARO"]) => True
     - faltaPoner([["PERRO",(1,2),(3,1)],["GATO",(3,1),(4,5)],["PAJARO",(6,7),(9,8)]]) => False
     """
-    for i in palabras:
-        if type(i) == str:
+    for elemento in palabras:
+        if type(elemento) == str:
             return True
     return False
 
@@ -213,10 +213,10 @@ def cualPoner(palabras):
     - cualPoner(["PERRO",(1,2),(3,1)],"GATO","PAJARO"]) => ("GATO",1)
     - cualPoner([["PERRO",(1,2),(3,1)],["GATO",(3,1),(4,5)],["PAJARO",(6,7),(9,8)]],"OSO") => ("OSO",3)
     """
-    for i in palabras:
-        if type(i) == str:
-            indice = palabras.index(i)
-            return (i,indice)
+    for elemento in palabras:
+        if type(elemento) == str:
+            indice = palabras.index(elemento)
+            return (elemento,indice)
 
 def cualPonerTest():
     assert cualPoner(["PERRO","GATO","PAJARO"]) == ("PERRO",0)
@@ -326,9 +326,9 @@ def ponerPalabra(tablero,posini,direccion,palabra):
     """
     tuplas = []
     tp = (posini[0],posini[1],direccion[0],direccion[1])
-    for i in palabra:
+    for letra in palabra:
         tuplas += [(tp[0],tp[1],tablero[tp[0]][tp[1]])]
-        tablero[tp[0]][tp[1]] = i
+        tablero[tp[0]][tp[1]] = letra
         tp = (tp[0]+tp[2],tp[1]+tp[3],tp[2],tp[3])
     return tuplas
 
@@ -346,8 +346,8 @@ def quitarPalabra(tablero,postupla):
     - quitarPalabra([["H","O","L","A"],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[(0,0,0),(0,1,0),(0,2,0),(0,3,0)]) => [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
     - quitarPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,"Y",0],[0,0,0,0]],[(0,0,"H"),(1,1,"O"),(2,2,0)]) => [["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]]
     """
-    for i in postupla:
-        tablero[i[0]][i[1]] = i[2]
+    for elem in postupla:
+        tablero[elem[0]][elem[1]] = elem[2]
     return tablero
 
 def quitarPalabraTest():
@@ -371,8 +371,8 @@ def ponerPalabras(tablero,palabras):
         listaLugares = lugares(tablero,direccionP,palabraActual[0])
         shuffle(listaLugares)
         sePuede = False
-        p = 0
-        while not sePuede and p < len(listaLugares):
+        iteracion = 0
+        while not sePuede and iteracion < len(listaLugares):
             if validarPalabraLugar(tablero,listaLugares[p],direccionP,palabraActual[0]):
                 sePuede = True
                 reemplazo = ponerPalabra(tablero,listaLugares[p],direccionP,palabraActual[0])
@@ -381,11 +381,11 @@ def ponerPalabras(tablero,palabras):
                 if palabraActual[1] < len(palabras)-1 and type(palabras[palabraActual[1]+1]) == str:
                         sePuede = False
                         quitarPalabra(tablero,reemplazo)
-            p += 1
+            iteracion += 1
         if type(palabras[palabraActual[1]]) == str:
             return tablero
     return tablero
-        
+
 def imprimeTablero(tablero):
     """
     - imprimeTablero : List(List(Str | Int) -> NONE
@@ -407,7 +407,7 @@ def generaSopa():
     masLarga = largoPalabraMasLarga(palabras)
     if tamaño < masLarga:
         tamaño = masLarga
-    tamaño = tamaño + 2 #Si sumar 2 no funciona, multiplicar por 2
+    tamaño = tamaño + 2
     tablero = generaTablero(tamaño)
     ponerPalabras(tablero,palabras)
     contador = 1
