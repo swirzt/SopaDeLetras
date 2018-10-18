@@ -1,9 +1,11 @@
 from random import randrange, shuffle
-from math import sqrt, ceil
+from math import sqrt, ceil, floor
 from os import getcwd
+from sys import setrecursionlimit
 #Constantes
 ABECEDARIO = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
 LARGOABC = len(ABECEDARIO)
+setrecursionlimit(1500)
 
 #Tipo de dato
 """
@@ -16,6 +18,11 @@ Por ej, la posicion (1,2) = tablero[1][2] = 6
 tablero = [[1,2,3],[4,5,6],[7,8,9]] -> 1 2 3
                                        4 5 6
                                        7 8 9
+
+
+Generamos el tablero en un archivo de nombre sopagenerada.txt. Las palabras usadas para generar dicha sopa se guardan en un archivo .txt de nombre listaPalabras
+Para encontrar las palabras en una sopa, recibe el archivo sopagenerada.txt que contiene la sopa de letras, y el archivo listaPalabras.txt que contiene las palabras a buscar
+Ambos archivos deben encontrarse en la carpeta donde se ejecuta el programa
 """
 """
 La lista de palabras puede tomar forma de:
@@ -78,9 +85,9 @@ def rellenarTablero(tablero):
     for y in range(Nfilas):
         for x in range(Ncolumnas):
             if tablero[y][x] == 0:
-                posletra = randrange(LARGOABC)
-                letra = ABECEDARIO[posletra]
-                tablero[y][x] = letra
+                 posletra = randrange(LARGOABC)
+                 letra = ABECEDARIO[posletra]
+                 tablero[y][x] = letra
     return tablero
 
 def revertir(str):
@@ -170,6 +177,11 @@ def generaTableroTest():
     assert generaTablero(4) == [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 generaTableroTest()
 
+"""
+generaListaPalabras -> list(str)
+generaListaPalabras: Genera una lista de n elementos que contiene las palabras ingresadas por el usuario
+Se espera que la cantidad de palabras sea mayor o igual a 1 
+"""
 def generaListaPalabras():
     lista = []
     n = int(input("Ingrese la cantidad total de palabras: "))
@@ -404,19 +416,21 @@ def generaSopa():
     tamaño = totalCaracteres(palabras)
     tamaño = ceil(sqrt(tamaño))
     masLarga = largoPalabraMasLarga(palabras)
-    tamaño = max(tamaño,masLarga) + 2
+    tamaño = floor(max(tamaño,masLarga) * 2)
     tablero = generaTablero(tamaño)
     ponerPalabras(tablero,palabras)
     contador = 1
+    largoPalabras = len(palabras)
     if palabras == []:
         palabras = [0]
-    while type(palabras[0]) == str and contador < len(palabras):
+    while type(palabras[largoPalabras-1]) == str and contador < largoPalabras:
         palabras = palabras[1:] + palabras[0]
         ponerPalabras(tablero,palabras)
     if type(palabras[0]) == str:
         return "NO SE PUDO"
     tablero = rellenarTablero(tablero)
     imprimeTablero(tablero)
+    print(palabras)
     return tablero,copiaPalabras
 
 def checkPos(tablero,pos,palabra):
@@ -430,10 +444,13 @@ def checkPos(tablero,pos,palabra):
     - checkPos([["H","B","C"],["P","O","G"],["K","Z","Y"]],(0,0),"HOY") => ["Diagonal","Descendente"]
     - checkPos([["C","A","S","A"],["A","C","A","S"],["S","A","C","A"],["A","S","A","C"]],(3,3),"CASA") => ["Vertical","Arriba"]
     """
-    altoAncho = len(tablero)
+    alto = len(tablero)
+    ancho = len(tablero[0])
     largoPalabra = len(palabra)
-    maxDerInf = altoAncho - largoPalabra
-    if pos[0] <= maxDerInf: #Abajo (+Y)
+    maxDer = ancho - largoPalabra
+    maxInf = alto - largoPalabra
+    minSupIzq = largoPalabra - 1
+    if pos[0] <= maxInf: #Abajo (+Y)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         letra = 0
@@ -444,7 +461,7 @@ def checkPos(tablero,pos,palabra):
         if palabra == palabraPos:
             listaPos = ["Vertical","Abajo"]
             return listaPos
-    if pos[0] >= largoPalabra-1: #Arriba (-Y)
+    if pos[0] >= minSupIzq: #Arriba (-Y)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         letra = 0
@@ -455,7 +472,7 @@ def checkPos(tablero,pos,palabra):
         if palabra == palabraPos:
             listaPos = ["Vertical","Arriba"]
             return listaPos
-    if pos[1] >= largoPalabra-1: #Izquierda (-X)
+    if pos[1] >= minSupIzq: #Izquierda (-X)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         letra = 0
@@ -466,7 +483,7 @@ def checkPos(tablero,pos,palabra):
         if palabra == palabraPos:
             listaPos = ["Horizontal","Izquierda"]
             return listaPos
-    if pos[1] <= maxDerInf: #Derecha (+X)
+    if pos[1] <= maxDer: #Derecha (+X)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         letra = 0
@@ -477,7 +494,7 @@ def checkPos(tablero,pos,palabra):
         if palabra == palabraPos:
             listaPos = ["Horizontal","Derecha"]
             return listaPos
-    if pos[0] <= altoAncho - largoPalabra and pos[1] <= altoAncho - largoPalabra: #Diagonal (+Y +X)
+    if pos[0] <= maxInf and pos[1] <= maxDer: #Diagonal (+Y +X)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
         letra = 0
