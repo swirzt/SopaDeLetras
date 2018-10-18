@@ -404,14 +404,8 @@ def imprimeTablero(tablero):
     - imprimeTablero : List(List(Str | Int) -> NONE
     - imprimeTablero recibe un tablero e imprime sus filas y agrega una fila y columna guia
     """
-    columnas = len(tablero[0])
-    filaIndices = "  "
-    for columna in range(columnas):
-        filaIndices += str(columna)+" "
-    print(filaIndices)
     for fila in tablero:
-        indice = tablero.index(fila)
-        filaStr = str(indice) +" "
+        filaStr = ""
         for columna in fila:
             filaStr += (columna + " ")
         print(filaStr)
