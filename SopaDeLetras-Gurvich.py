@@ -19,12 +19,13 @@ tablero = [[1,2,3],[4,5,6],[7,8,9]] -> 1 2 3
                                        4 5 6
                                        7 8 9
 
-
 Generamos el tablero en un archivo .txt de nombre sopagenerada. Las palabras usadas para generar dicha sopa se guardan en un archivo .txt de nombre listaPalabras
 Para encontrar las palabras en una sopa, recibe el archivo sopagenerada.txt que contiene la sopa de letras, y el archivo listaPalabras.txt que contiene las palabras a buscar
 Ambos archivos deben encontrarse en la carpeta donde se ejecuta el programa
-"""
-"""
+
+En sopagenerada.txt se almacena la sopa de modo que cada linea representa una fila del tablero, las letras son todas mayusculas
+En listaPalabras.txt se almacenan las palabras colocadas de modo que cada linea representa una palabra distinta, tambien en mayuscula
+
 La lista de palabras puede tomar forma de:
 -Lista de strings con cada string siendo una palabra (Con todos los caracteres en mayuscula)
 -Lista de listas, cada lista interior contiene la palabra original y una tupla para cada letra
@@ -552,19 +553,19 @@ def resuelveSopa():
     palabras = archivoPalabras.readlines()
     archivoSopa.close()
     archivoPalabras.close()
-    for z in range(len(palabras)):
-        largopalabra = len(palabras[z])-1 #Para evitar el caracter \n
-        palabras[z] = palabras[z][:largopalabra]
+    for x in range(len(palabras)):
+        palabras[x] = palabras[x].rstrip() #elimina \n
+    for fila in range(len(tableroJunto)):
+        tableroJunto[fila] = tableroJunto[fila].rstrip() #elimina \n
     tableroSeparado = []
-    for i in tableroJunto:
-        fila = []
-        for x in range(len(i)-1): #Para evitar el caracter \n
-            fila += [i[x]]
-        tableroSeparado += [fila]
+    for fila in tableroJunto:
+        filaLista = []
+        for letra in range(len(fila)):
+            filaLista += [fila[letra]]
+        tableroSeparado += [filaLista]
     listaencontradas = []
     for palabra in palabras:
-        encontrada = encuentraPalabra(tableroSeparado,palabra)
-        listaencontradas += [encontrada]
+        listaencontradas += [encuentraPalabra(tableroSeparado,palabra)]
     imprimeTablero(tableroSeparado)
     print(listaencontradas)
     return
