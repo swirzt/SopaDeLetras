@@ -436,45 +436,55 @@ def checkPos(tablero,pos,palabra):
     if pos[0] <= maxDerInf: #Abajo (+Y)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
-        for x in range(largoPalabra):
+        letra = 0
+        while letra < largoPalabra:
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0]+1,copiaPos[1])
+            letra += 1
         if palabra == palabraPos:
             listaPos = ["Vertical","Abajo"]
             return listaPos
     if pos[0] >= largoPalabra-1: #Arriba (-Y)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
-        for x in range(largoPalabra):
+        letra = 0
+        while letra < largoPalabra:
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0]-1,copiaPos[1])
+            letra += 1
         if palabra == palabraPos:
             listaPos = ["Vertical","Arriba"]
             return listaPos
     if pos[1] >= largoPalabra-1: #Izquierda (-X)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
-        for x in range(largoPalabra):
+        letra = 0
+        while letra < largoPalabra:
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0],copiaPos[1]-1)
+            letra += 1
         if palabra == palabraPos:
             listaPos = ["Horizontal","Izquierda"]
             return listaPos
     if pos[1] <= maxDerInf: #Derecha (+X)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
-        for x in range(largoPalabra):
+        letra = 0
+        while letra < largoPalabra:
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0],copiaPos[1]+1)
+            letra += 1
         if palabra == palabraPos:
             listaPos = ["Horizontal","Derecha"]
             return listaPos
     if pos[0] <= altoAncho - largoPalabra and pos[1] <= altoAncho - largoPalabra: #Diagonal (+Y +X)
         copiaPos = (pos[0],pos[1])
         palabraPos = ""
-        for x in range(largoPalabra):
+        letra = 0
+        while letra < largoPalabra:
             palabraPos += tablero[copiaPos[0]][copiaPos[1]]
             copiaPos = (copiaPos[0]+1,copiaPos[1]+1)
+            letra += 1
         if palabra == palabraPos:
             listaPos = ["Diagonal","Descendente"]
             return listaPos
