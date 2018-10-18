@@ -20,7 +20,7 @@ tablero = [[1,2,3],[4,5,6],[7,8,9]] -> 1 2 3
                                        7 8 9
 
 
-Generamos el tablero en un archivo de nombre sopagenerada.txt. Las palabras usadas para generar dicha sopa se guardan en un archivo .txt de nombre listaPalabras
+Generamos el tablero en un archivo .txt de nombre sopagenerada. Las palabras usadas para generar dicha sopa se guardan en un archivo .txt de nombre listaPalabras
 Para encontrar las palabras en una sopa, recibe el archivo sopagenerada.txt que contiene la sopa de letras, y el archivo listaPalabras.txt que contiene las palabras a buscar
 Ambos archivos deben encontrarse en la carpeta donde se ejecuta el programa
 """
