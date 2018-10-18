@@ -422,7 +422,7 @@ def generaSopa():
     tamaño = totalCaracteres(palabras)
     tamaño = ceil(sqrt(tamaño))
     masLarga = largoPalabraMasLarga(palabras)
-    tamaño = floor(max(tamaño,masLarga) * 2)
+    tamaño = floor(max(tamaño,masLarga) * 1.5)
     tablero = generaTablero(tamaño)
     ponerPalabras(tablero,palabras)
     contador = 1
@@ -436,7 +436,6 @@ def generaSopa():
         return "NO SE PUDO"
     tablero = rellenarTablero(tablero)
     imprimeTablero(tablero)
-    print(palabras)
     return tablero,copiaPalabras
 
 def checkPos(tablero,pos,palabra):
