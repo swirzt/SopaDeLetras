@@ -373,9 +373,9 @@ def ponerPalabras(tablero,palabras):
         sePuede = False
         iteracion = 0
         while not sePuede and iteracion < len(listaLugares):
-            if validarPalabraLugar(tablero,listaLugares[p],direccionP,palabraActual[0]):
+            if validarPalabraLugar(tablero,listaLugares[iteracion],direccionP,palabraActual[0]):
                 sePuede = True
-                reemplazo = ponerPalabra(tablero,listaLugares[p],direccionP,palabraActual[0])
+                reemplazo = ponerPalabra(tablero,listaLugares[iteracion],direccionP,palabraActual[0])
                 palabras[palabraActual[1]] = reemplazo
                 ponerPalabras(tablero,palabras)
                 if palabraActual[1] < len(palabras)-1 and type(palabras[palabraActual[1]+1]) == str:
@@ -402,15 +402,14 @@ def generaSopa():
     copiaPalabras = palabras [:]
     palabras = eliminaIncluidos(palabras)
     tamaño = totalCaracteres(palabras)
-    tamaño = sqrt(tamaño)
-    tamaño = ceil(tamaño)
+    tamaño = ceil(sqrt(tamaño))
     masLarga = largoPalabraMasLarga(palabras)
-    if tamaño < masLarga:
-        tamaño = masLarga
-    tamaño = tamaño + 2
+    tamaño = max(tamaño,masLarga) + 2
     tablero = generaTablero(tamaño)
     ponerPalabras(tablero,palabras)
     contador = 1
+    if palabras == []:
+        palabras = [0]
     while type(palabras[0]) == str and contador < len(palabras):
         palabras = palabras[1:] + palabras[0]
         ponerPalabras(tablero,palabras)
