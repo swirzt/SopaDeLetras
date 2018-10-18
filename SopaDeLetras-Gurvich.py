@@ -558,5 +558,5 @@ def main():
         guardaPalabra.close()
     elif eleccion == 2:
         resuelveSopa()
-    espera = input("") #No cierra el programa hasta oprimir ENTER
+    esperar = input("") #No cierra el programa hasta oprimir ENTER
 main()
