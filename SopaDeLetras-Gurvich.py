@@ -401,10 +401,16 @@ def ponerPalabras(tablero,palabras):
 def imprimeTablero(tablero):
     """
     - imprimeTablero : List(List(Str | Int) -> NONE
-    - imprimeTablero recibe un tablero e imprime sus filas una por una
+    - imprimeTablero recibe un tablero e imprime sus filas y agrega una fila y columna guia
     """
+    columnas = len(tablero[0])
+    filaIndices = "  "
+    for columna in range(columnas):
+        filaIndices += str(columna)+" "
+    print(filaIndices)
     for fila in tablero:
-        filaStr = ""
+        indice = tablero.index(fila)
+        filaStr = str(indice) +" "
         for columna in fila:
             filaStr += (columna + " ")
         print(filaStr)
