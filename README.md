@@ -1,2 +1,2 @@
 # SopaDeLetras
-Funcion casi finalizada
+Terminado y entregado
