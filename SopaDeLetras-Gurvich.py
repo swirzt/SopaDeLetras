@@ -278,6 +278,8 @@ def lugares(tablero,direccion,palabra):
     anchoAlto = len(tablero)
     lpalabra = len(palabra)
     posibles = []
+    maxX = -1
+    maxY = -1
     if direccion == (0,1):
         maxX = anchoAlto - lpalabra + 1
         maxY = anchoAlto
@@ -310,12 +312,15 @@ def validarPalabraLugar(tablero,posini,direccion,palabra):
     - validarPalabraLugar([["A","B","C"],[0,0,0],[0,0,0]],(0,2),(0,1),"OLA") => False
     """
     t = (posini[0],posini[1],direccion[0],direccion[1])
-    for letra in palabra:
-        if tablero[t[0]][t[1]] == 0 or tablero[t[0]][t[1]] == letra:
-            t = (t[0]+t[2],t[1]+t[3],t[2],t[3])
-        else:
-            return False
-    return True
+    letra = 0
+    largopalabra = len(palabra)
+    while letra < largopalabra and (tablero[t[0]][t[1]] == 0 or tablero[t[0]][t[1]] == palabra[letra]):
+        t = (t[0]+t[2],t[1]+t[3],t[2],t[3])
+        letra += 1
+    if letra < largopalabra:
+        return False
+    else:
+        return True
 
 def test_validarPalabraLugar():
     assert validarPalabraLugar(generaTablero(5),(0,0),(1,0),"HOLA") == True
@@ -581,4 +586,4 @@ def main():
     elif eleccion == 2:
         resuelveSopa()
     esperar = input("") #No cierra el programa hasta oprimir ENTER
-#main()
+main()
