@@ -118,12 +118,15 @@ def palabraIncluida(palabra,lista):
     - palabraIncluida("True",[]) => False
     - palabraIncluida("comer",["fisurar","remocar","limpiar"]) => True
     """
-    for elemento in lista:
-        if palabra in elemento:
-            return True
-        if revertir(palabra) in elemento:
-            return True
-    return False
+    elemento = 0
+    largoL = len(lista)
+    inversa = revertir(palabra)
+    while elemento < largoL and not palabra in lista[elemento] and not inversa in lista[elemento]:
+        elemento += 1
+    if elemento < largoL:
+        return True
+    else:
+        return False
 
 def test_palabraIncluida():
     assert palabraIncluida("ola",["arena","mar","ola","playa"]) == True
@@ -198,10 +201,14 @@ def faltaPoner(palabras):
     - faltaPoner([["PERRO",(1,2),(3,1)],"GATO","PAJARO"]) => True
     - faltaPoner([["PERRO",(1,2),(3,1)],["GATO",(3,1),(4,5)],["PAJARO",(6,7),(9,8)]]) => False
     """
-    for elemento in palabras:
-        if type(elemento) == str:
-            return True
-    return False
+    elemento = 0
+    largoL = len(palabras)
+    while elemento < largoL and type(palabras[elemento]) != str:
+        elemento += 1
+    if elemento < largoL:
+        return True
+    else:
+        return False
 
 def test_faltaPoner():
     assert faltaPoner(["PERRO","GATO","PAJARO"]) == True
@@ -574,4 +581,4 @@ def main():
     elif eleccion == 2:
         resuelveSopa()
     esperar = input("") #No cierra el programa hasta oprimir ENTER
-main()
+#main()
