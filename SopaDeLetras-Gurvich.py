@@ -50,10 +50,9 @@ def totalCaracteres(lista):
         sum += len(palabra)
     return sum
 
-def totalCaracteresTest():
+def test_totalCaracteres():
     assert totalCaracteres(["Perro","gato","cobayo"]) == 15
     assert totalCaracteres([]) == 0
-totalCaracteresTest()
 
 def largoPalabraMasLarga(lista):
     """
@@ -66,14 +65,12 @@ def largoPalabraMasLarga(lista):
     """
     largo = 0
     for palabra in lista:
-        if len(palabra) > largo:
-            largo = len(palabra)
+        largo = max(largo,len(palabra))
     return largo
 
-def largoPalabraMasLargaTest():
+def test_largoPalabraMasLarga():
     assert largoPalabraMasLarga(["Perro","gato","Encefalograma"]) == 13
     assert largoPalabraMasLarga([]) == 0
-largoPalabraMasLargaTest()
 
 def rellenarTablero(tablero):
     """
@@ -105,11 +102,10 @@ def revertir(str):
         nuevoStr = letra + nuevoStr
     return nuevoStr
 
-def revertirTest():
+def test_revertir():
     assert revertir("hola") == "aloh"
     assert revertir("Electroencefalografista") == "atsifargolafecneortcelE"
     assert revertir("") == ""
-revertirTest()
 
 def palabraIncluida(palabra,lista):
     """
@@ -129,12 +125,11 @@ def palabraIncluida(palabra,lista):
             return True
     return False
 
-def palabraIncluidaTest():
+def test_palabraIncluida():
     assert palabraIncluida("ola",["arena","mar","ola","playa"]) == True
     assert palabraIncluida("no",["yo","tu","el","nosotros","vosotros","ellos"]) == True
     assert palabraIncluida("True",[]) == False
     assert palabraIncluida("comer",["fisurar","remocar","limpiar"]) == True
-palabraIncluidaTest()
 
 def eliminaIncluidos(lista):
     """
@@ -154,11 +149,10 @@ def eliminaIncluidos(lista):
             lista = resto
     return lista
 
-def eliminaIncluidosTest():
+def test_eliminaIncluidos():
     assert eliminaIncluidos(["ola","arena","mar","ola","hola","playa"]) == ["arena","mar","hola","playa"]
     assert eliminaIncluidos(["comer","fisurar","remocar","limpiar","remo"]) == ["fisurar","remocar","limpiar"]
     assert eliminaIncluidos(["chau","tirar","saludar"]) == ["chau","tirar","saludar"]
-eliminaIncluidosTest()
 
 def generaTablero(n):
     """
@@ -172,11 +166,10 @@ def generaTablero(n):
     tablero = [[0 for x in range(n)] for y in range(n)]
     return tablero
 
-def generaTableroTest():
+def test_generaTablero():
     assert generaTablero(3) == [[0,0,0],[0,0,0],[0,0,0]]
     assert generaTablero(1) == [[0]]
     assert generaTablero(4) == [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-generaTableroTest()
 
 """
 generaListaPalabras -> list(str)
@@ -210,11 +203,10 @@ def faltaPoner(palabras):
             return True
     return False
 
-def faltaPonerTest():
+def test_faltaPoner():
     assert faltaPoner(["PERRO","GATO","PAJARO"]) == True
     assert faltaPoner([["PERRO",(1,2),(3,1)],"GATO","PAJARO"]) == True
     assert faltaPoner([["PERRO",(1,2),(3,1)],["GATO",(3,1),(4,5)],["PAJARO",(6,7),(9,8)]]) == False
-faltaPonerTest()
 
 def cualPoner(palabras):
     """
@@ -231,11 +223,10 @@ def cualPoner(palabras):
             indice = palabras.index(elemento)
             return (elemento,indice)
 
-def cualPonerTest():
+def test_cualPoner():
     assert cualPoner(["PERRO","GATO","PAJARO"]) == ("PERRO",0)
     assert cualPoner([["PERRO",(1,2),(3,1)],"GATO","PAJARO"]) == ("GATO",1)
     assert cualPoner([["PERRO",(1,2),(3,1)],["GATO",(3,1),(4,5)],["PAJARO",(6,7),(9,8)],"OSO"]) == ("OSO",3)
-cualPonerTest()
 
 def direccion():
     """
@@ -262,7 +253,9 @@ def sentido(direccion):
     else:
         sent = randrange(2)
         return sent
-assert sentido((1,1)) == 0
+
+def test_sentido():
+    assert sentido((1,1)) == 0
 
 def lugares(tablero,direccion,palabra):
     """
@@ -292,11 +285,10 @@ def lugares(tablero,direccion,palabra):
                 posibles += [(y,x)]
     return posibles
 
-def lugaresTest():
+def test_lugares():
     assert lugares(generaTablero(6),(1,1),"PERRO") == [(0,0),(0,1),(1,0),(1,1)]
     assert lugares(generaTablero(5),(1,0),"OLA") == [(0,0),(0,1),(0,2),(0,3),(0,4),(1,0),(1,1),(1,2),(1,3),(1,4),(2,0),(2,1),(2,2),(2,3),(2,4)]
     assert lugares(generaTablero(3),(0,1),"MANO") == []
-lugaresTest()
 
 def validarPalabraLugar(tablero,posini,direccion,palabra):
     """
@@ -318,10 +310,9 @@ def validarPalabraLugar(tablero,posini,direccion,palabra):
             return False
     return True
 
-def validarPalabraLugarTest():
+def test_validarPalabraLugar():
     assert validarPalabraLugar(generaTablero(5),(0,0),(1,0),"HOLA") == True
     assert validarPalabraLugar([["A","B","C"],[0,0,0],[0,0,0]],(0,2),(0,1),"OLA") == False
-validarPalabraLugarTest()
 
 def ponerPalabra(tablero,posini,direccion,palabra):
     """
@@ -345,10 +336,9 @@ def ponerPalabra(tablero,posini,direccion,palabra):
         tp = (tp[0]+tp[2],tp[1]+tp[3],tp[2],tp[3])
     return tuplas
 
-def ponerPalabraTest():
+def test_ponerPalabra():
     assert ponerPalabra(generaTablero(5),(0,0),(0,1),"HOLA") == [(0,0,0),(0,1,0),(0,2,0),(0,3,0)]
     assert ponerPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]],(0,0),(1,1),"HOY") == [(0,0,"H"),(1,1,"O"),(2,2,0)]
-ponerPalabraTest()
 
 def quitarPalabra(tablero,postupla):
     """
@@ -363,10 +353,9 @@ def quitarPalabra(tablero,postupla):
         tablero[elem[0]][elem[1]] = elem[2]
     return tablero
 
-def quitarPalabraTest():
+def test_quitarPalabra():
     assert quitarPalabra([["H","O","L","A"],[0,0,0,0],[0,0,0,0],[0,0,0,0]],[(0,0,0),(0,1,0),(0,2,0),(0,3,0)]) == [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
     assert quitarPalabra([["H","C","K","T"],["B","O","L","A"],[0,0,"Y",0],[0,0,0,0]],[(0,0,"H"),(1,1,"O"),(2,2,0)]) == [["H","C","K","T"],["B","O","L","A"],[0,0,0,0],[0,0,0,0]]
-quitarPalabraTest()
 
 def ponerPalabras(tablero,palabras):
     """
@@ -508,11 +497,10 @@ def checkPos(tablero,pos,palabra):
             return listaPos
     return False
 
-def checkPosTest():
+def test_checkPos():
     assert checkPos([["C","C","C","C"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],(0,0),"GATO") == False
     assert checkPos([["H","B","C"],["P","O","G"],["K","Z","Y"]],(0,0),"HOY") == ["Diagonal","Descendente"]
     assert checkPos([["C","A","S","A"],["A","C","A","S"],["S","A","C","A"],["A","S","A","C"]],(3,3),"CASA") == ["Vertical","Arriba"]
-checkPosTest()
 
 def encuentraPalabra(tablero,palabra):
     """
@@ -536,10 +524,9 @@ def encuentraPalabra(tablero,palabra):
     noEsta = (palabra,(0,0),"No","Encontrada")
     return noEsta
 
-def encuentraPalabraTest():
+def test_encuentraPalabra():
     assert encuentraPalabra([["C","A","S","A"],["C","C","C","C"],["C","C","C","C"],["C","C","C","C"]],"CASA") == ("CASA",(0,0),"Horizontal","Derecha")
     assert encuentraPalabra(generaTablero(5),"PERRO") == ("PERRO",(0,0),"No","Encontrada")
-encuentraPalabraTest()
 
 def resuelveSopa():
     archivoSopa = open("sopagenerada.txt","r")
