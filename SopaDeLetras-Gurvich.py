@@ -427,8 +427,9 @@ def generaSopa():
     while type(palabras[largoPalabras-1]) == str and contador < largoPalabras:
         palabras = palabras[1:] + palabras[0]
         ponerPalabras(tablero,palabras)
+        contador += 1
     if type(palabras[0]) == str:
-        return "NO SE PUDO"
+        return generaTablero(tamaño),["NO SE PUDO"]
     tablero = rellenarTablero(tablero)
     imprimeTablero(tablero)
     return tablero,copiaPalabras
