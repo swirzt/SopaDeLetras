@@ -1,2 +1,2 @@
 # SopaDeLetras
-Funcion casi finalizada
+Funcion ATR me saque 9,25
