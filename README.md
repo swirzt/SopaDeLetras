@@ -1,2 +1,2 @@
 # SopaDeLetras
-Funcion ATR me saque 9,25
+Nota final: 9,25
