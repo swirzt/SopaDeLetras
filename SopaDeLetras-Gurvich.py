@@ -1,6 +1,5 @@
 from random import randrange, shuffle
 from math import sqrt, ceil, floor
-from os import getcwd
 from sys import setrecursionlimit
 #Constantes
 ABECEDARIO = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
